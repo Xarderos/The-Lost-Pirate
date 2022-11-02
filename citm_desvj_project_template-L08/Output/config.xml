@@ -30,10 +30,10 @@
     <item x="200" y="672" texturepath="Assets/Textures/goldCoin.png"/>
     <item x="500" y="672" texturepath="Assets/Textures/goldCoin.png"/>
   </scene>
-                  
+
   <map>
     <mapfolder path="Assets/Maps/"/>
-    <mapfile path="Assets/Maps/PirateMap.tmx"/>
+    <mapfile path="Assets/Maps/MapTemplate.tmx"/>
   </map>
   
 </config>
