@@ -205,6 +205,39 @@ bool Map::Load()
     // L07 DONE 7: Assign collider type
     c3->ctype = ColliderType::PLATFORM;
 
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = mapData.maplayers.start;
+
+    while (mapLayerItem != NULL) {
+
+        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
+        if (mapLayerItem->data->properties.GetProperty("Collision") != NULL && mapLayerItem->data->properties.GetProperty("Collision")->value) {
+
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    // L05: DONE 9: Complete the draw function
+                    int gid = mapLayerItem->data->Get(x, y);
+                    iPoint pos = MapToWorld(x, y);
+
+                    //If GID 97 == Red Square (collider)
+                    if (gid == 97)
+                    {
+                        PhysBody* mapCollider = app->physics->CreateRectangle(pos.x + 16, pos.y + 17, 32, 32, STATIC);
+                    
+                    }
+                    //98 == Green Square (die)
+                    else if (gid == 98)
+                    {
+                        PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        mapCollider->ctype = ColliderType::DEATH;
+                    }
+                }
+            }
+        }
+        mapLayerItem = mapLayerItem->next;
+    }
     if(ret == true)
     {
         // L04: DONE 5: LOG all the data loaded iterate all tilesets and LOG everything

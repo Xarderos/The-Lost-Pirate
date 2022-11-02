@@ -4400,7 +4400,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="11" name="Hitbox" width="72" height="15" visible="0">
+ <layer id="11" name="Hitbox" width="72" height="15">
   <properties>
    <property name="Collision" type="bool" value="true"/>
    <property name="Draw" type="bool" value="false"/>
@@ -5274,8 +5274,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="98"/>
+   <tile gid="97"/>
    <tile/>
    <tile/>
    <tile gid="97"/>
