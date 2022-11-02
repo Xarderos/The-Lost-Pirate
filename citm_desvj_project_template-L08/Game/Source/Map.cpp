@@ -193,9 +193,39 @@ bool Map::Load()
     
     // L07 DONE 3: Create colliders
     // Later you can create a function here to load and create the colliders from the map
-    app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
-    app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
-    app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
+
+
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = mapData.maplayers.start;
+    while (mapLayerItem != NULL) {
+
+        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
+        if (mapLayerItem->data->properties.GetProperty("Collision") != NULL && mapLayerItem->data->properties.GetProperty("Collision")->value) {
+
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    // L05: DONE 9: Complete the draw function
+                    int gid = mapLayerItem->data->Get(x, y);
+
+                    //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
+                    TileSet* tileset = GetTilesetFromTileId(gid);
+
+                    SDL_Rect r = tileset->GetTileRect(gid);
+                    iPoint pos = MapToWorld(x, y);
+                    //Gid=97-->Red Collision
+                    if (gid == 97) {
+                        app->physics->CreateRectangle(x - 32, y - 32, 32, 32, STATIC);
+                    }
+                    //Gid=98-->Green Collision 
+                    
+                }
+            }
+        }
+        mapLayerItem = mapLayerItem->next;
+
+    }
 
     if(ret == true)
     {
