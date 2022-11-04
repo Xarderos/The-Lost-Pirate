@@ -224,7 +224,7 @@ bool Map::Load()
                     //If GID 97 == Red Square (collider)
                     if (gid == 97)
                     {
-                        PhysBody* mapCollider = app->physics->CreateRectangle(pos.x + 16, pos.y + 17, 32, 32, STATIC);
+                        PhysBody* mapCollider = app->physics->CreateRectangle(pos.x + 16, pos.y + 16, 32, 32, STATIC);
                     
                     }
                     //98 == Green Square (die)

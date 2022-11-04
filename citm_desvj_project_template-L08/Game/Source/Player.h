@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
+#include "Physics.h"
 
 struct SDL_Texture;
 
@@ -26,6 +27,8 @@ public:
 	// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	int salt = 0;
+	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 
 public:
 
