@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Window.h"
 #include "EntityManager.h"
+#include "Entity.h"
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
@@ -147,7 +148,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
 			app->entityManager->DestroyEntity(this);
-
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
