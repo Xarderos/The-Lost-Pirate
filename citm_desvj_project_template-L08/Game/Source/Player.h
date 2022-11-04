@@ -26,9 +26,10 @@ public:
 
 	// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 	void OnCollision(PhysBody* physA, PhysBody* physB);
-
+	int doublejump;
+	bool bandera;
 	int salt = 0;
-	int saltvel = -5;
+	int saltvel = -6;
 	b2Vec2 vel = b2Vec2(0, 0);
 	b2Vec2 death = b2Vec2(0, 0);
 	

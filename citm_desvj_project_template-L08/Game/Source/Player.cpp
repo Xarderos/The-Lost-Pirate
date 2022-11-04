@@ -48,7 +48,7 @@ bool Player::Start() {
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/coinPickup.ogg");
-	
+	bandera = false;
 	return true;
 }
 
@@ -59,7 +59,7 @@ bool Player::Update()
 
 	int speed = 4; 
 	
-
+	
 	if (salt <= 0) {
 		vel = b2Vec2(0, -GRAVITY_Y);
 	}
@@ -89,9 +89,10 @@ bool Player::Update()
 			vel = b2Vec2(speed, saltvel);
 		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt<=0) {
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt<=0 && doublejump>=1) {
 		salt = 15;
 		vel = b2Vec2(0, saltvel);
+		doublejump--;
 	}
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(vel);
@@ -100,10 +101,19 @@ bool Player::Update()
 	
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-	app->render->DrawTexture(texture, position.x , position.y);
+	app->render->DrawTexture(texture, position.x+3 , position.y+5);
 	
 	b2Vec2 xdd = pbody->body->GetPosition();
-	app->render->camera.x = ((-xdd.x)*50*3)+400;
+	xdd.x = ((-xdd.x) * 50 * 3) + 600;
+	if (xdd.x < -96) {
+		app->render->camera.x = xdd.x;
+	}
+	if (xdd.x < -2950) {
+		bandera = true;
+
+	}
+	
+	
 	
 	salt--;
 	return true;
@@ -127,6 +137,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::PLATFORM:
 			LOG("Collision PLATFORM");
+			if (bandera == false) {
+				doublejump = 1;
+			}
+			if (bandera == true) {
+				doublejump = 2;
+			}
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
