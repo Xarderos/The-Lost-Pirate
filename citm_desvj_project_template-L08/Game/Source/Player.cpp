@@ -90,7 +90,7 @@ bool Player::Update()
 		}
 	}
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt<=0 && doublejump>=1) {
-		salt = 15;
+		salt = 16;
 		vel = b2Vec2(0, saltvel);
 		doublejump--;
 	}
@@ -146,7 +146,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			
+			app->entityManager->DestroyEntity(this);
+
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
