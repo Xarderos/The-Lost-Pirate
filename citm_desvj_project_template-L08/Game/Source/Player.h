@@ -5,7 +5,7 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Physics.h"
-
+#include "Window.h"
 struct SDL_Texture;
 
 class Player : public Entity
@@ -28,8 +28,10 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 	int salt = 0;
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
-
+	int saltvel = -5;
+	b2Vec2 vel = b2Vec2(0, 0);
+	b2Vec2 death = b2Vec2(0, 0);
+	
 public:
 
 private:

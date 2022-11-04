@@ -7,8 +7,8 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Point.h"
-#include "Physics.h"
-
+#include "Window.h"
+#include "EntityManager.h"
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
@@ -23,7 +23,7 @@ bool Player::Awake() {
 	//L02: DONE 1: Initialize Player parameters
 	//pos = position;
 	//texturePath = "Assets/Textures/player/idle1.png";
-
+	int scale = app->win->GetScale();
 	//L02: DONE 5: Get Player parameters from XML
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -48,7 +48,7 @@ bool Player::Start() {
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/coinPickup.ogg");
-
+	
 	return true;
 }
 
@@ -57,7 +57,7 @@ bool Player::Update()
 
 	// L07 DONE 5: Add physics to the player - updated player position using physics
 
-	int speed = 10; 
+	int speed = 4; 
 	
 
 	if (salt <= 0) {
@@ -73,24 +73,38 @@ bool Player::Update()
 	}
 		
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed, -GRAVITY_Y);
+		if (salt <= 0) {
+			vel = b2Vec2(-speed, -GRAVITY_Y);
+		}
+		if (salt > 0) {
+			vel = b2Vec2(-speed, saltvel);
+		}
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed, -GRAVITY_Y);
+		if (salt <= 0) {
+			vel = b2Vec2(speed, -GRAVITY_Y);
+		}
+		if (salt > 0) {
+			vel = b2Vec2(speed, saltvel);
+		}
 	}
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt<=0) {
-		salt = 20;
-		vel = b2Vec2(0, 20);
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt<=0) {
+		salt = 15;
+		vel = b2Vec2(0, saltvel);
 	}
 	//Set the velocity of the pbody of the player
 	pbody->body->SetLinearVelocity(vel);
 
 	//Update player position in pixels
+	
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-
 	app->render->DrawTexture(texture, position.x , position.y);
+	
+	b2Vec2 xdd = pbody->body->GetPosition();
+	app->render->camera.x = ((-xdd.x)*50*3)+400;
+	
 	salt--;
 	return true;
 }
@@ -116,7 +130,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			app->audio->PlayFx(pickCoinFxId);
+			
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
