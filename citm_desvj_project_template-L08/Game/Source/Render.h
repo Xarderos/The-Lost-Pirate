@@ -52,6 +52,8 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
+	int playerposx;
+	int playerposy;
 };
 
 #endif // __RENDER_H__

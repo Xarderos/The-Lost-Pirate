@@ -1,7 +1,7 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
-
+#include "Player.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -231,8 +231,9 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 // for now load camera's x and y
 bool Render::LoadState(pugi::xml_node& data)
 {
-	camera.x = data.child("camera").attribute("x").as_int();
-	camera.y = data.child("camera").attribute("y").as_int();
+
+	playerposx = data.child("posi").attribute("x").as_int();
+	playerposx = data.child("posi").attribute("y").as_int();
 
 	return true;
 }
@@ -241,10 +242,11 @@ bool Render::LoadState(pugi::xml_node& data)
 // using append_child and append_attribute
 bool Render::SaveState(pugi::xml_node& data)
 {
-	pugi::xml_node cam = data.append_child("camera");
 
-	cam.append_attribute("x") = camera.x;
-	cam.append_attribute("y") = camera.y;
+	pugi::xml_node pos = data.append_child("posi");
+
+	pos.append_attribute("x") = playerposx;
+	pos.append_attribute("y") = playerposy;
 
 	return true;
 }

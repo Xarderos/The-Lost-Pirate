@@ -71,6 +71,7 @@ bool Player::Start() {
 
 bool Player::Update()
 {
+
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
 		app->audio->PlayFx(startsound);
 		start = true;
@@ -100,7 +101,7 @@ bool Player::Update()
 		}
 		if (deathtimer < 0 && chest == false) {
 
-
+			
 			//L02: DONE 4: modify the position of the player using arrow keys and render the texture
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 				//
@@ -148,13 +149,15 @@ bool Player::Update()
 		}
 		if (dreta == false) {
 			app->render->DrawTexture(textureleft, position.x + 6, position.y + 4);
-
 		}
 
 		b2Vec2 xdd = pbody->body->GetPosition();
 		xdd.x = ((-xdd.x) * 50 * 3) + 600;
 		if (xdd.x < -96 && xdd.x >-4896) {
 			app->render->camera.x = xdd.x;
+		}
+		if (xdd.x > -96) {
+			app->render->camera.x = -96;
 		}
 
 		if (xdd.x < -2950 && bandera == false) {
@@ -175,6 +178,19 @@ bool Player::Update()
 			if (bandera == true) {
 				app->render->camera.x = -2950;
 			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+			app->render->playerposx = pbody->body->GetTransform().p.x;
+			app->render->playerposy = pbody->body->GetTransform().p.y;
+			app->SaveGameRequest();
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+			app->LoadGameRequest();
+			vel = { 0,0 };
+			float xm = app->render->playerposx;
+			float ym = app->render->playerposy;
+			pbody->body->SetTransform({ xm,ym }, 0);
 		}
 		deathtimer--;
 
