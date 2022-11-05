@@ -218,10 +218,14 @@ bool Map::Load()
                         mapCollider->ctype = ColliderType::PLATFORM;
                     }
                     //98 == Green Square (die)
-                    else if (gid == 98)
+                    if (gid == 98)
                     {
                         PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
                         mapCollider->ctype = ColliderType::DEATH;
+                    }
+                    if (gid == 99){
+                        PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        mapCollider->ctype = ColliderType::CHEST;
                     }
                 }
             }

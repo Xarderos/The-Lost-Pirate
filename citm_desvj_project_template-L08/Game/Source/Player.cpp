@@ -27,6 +27,7 @@ bool Player::Awake() {
 	//texturePath = "Assets/Textures/player/idle1.png";
 	int scale = app->win->GetScale();
 	//L02: DONE 5: Get Player parameters from XML
+
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
@@ -37,6 +38,9 @@ bool Player::Awake() {
 bool Player::Start() {
 	int salt;
 	//initilize textures
+	menutexture= app->tex->Load("Assets/Textures/Start.png");
+	deathtexture = app->tex->Load("Assets/Textures/DeathCam.png");
+
 	texture = app->tex->Load(texturePath);
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 14, bodyType::DYNAMIC);
@@ -50,94 +54,110 @@ bool Player::Start() {
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/coinPickup.ogg");
 	deathsound= app->audio->LoadFx("Assets/Audio/Fx/DeathsoundinMinecraft.ogg");
 	checkpointsound= app->audio->LoadFx("Assets/Audio/Fx/CheckpointSoundEffect.ogg");
+	startsound = app->audio->LoadFx("Assets/Audio/Fx/BindingofIsaacGameStartSound.ogg");
 	bandera = false;
 	deathbool = false;
 	deathtimer = 0;
 	doublejumptimer = 0;
+	chest = false;
+	start = false;
 	return true;
 }
 
 bool Player::Update()
 {
-
-	// L07 DONE 5: Add physics to the player - updated player position using physics
-
-	int speed = 4; 
-	if (salt <= 0) {
-		vel = b2Vec2(0, -GRAVITY_Y);
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
+		app->audio->PlayFx(startsound);
+		start = true;
 	}
-	if (deathtimer < 0) {
-		
-
-		//L02: DONE 4: modify the position of the player using arrow keys and render the texture
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			//
+	if (start == false) {
+		app->render->camera.x = -10000 * 3;
+		app->render->DrawTexture(menutexture, 10000, 118);
+	}
+	if (start == true) {
+		if (deathtimer > 0) {
+			app->render->camera.x = -10000 * 3;
+			app->render->DrawTexture(deathtexture, 10000, 118);
 		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			//
+		// L07 DONE 5: Add physics to the player - updated player position using physics
+		int speed = 4;
+		if (salt <= 0) {
+			vel = b2Vec2(0, -GRAVITY_Y);
 		}
+		if (deathtimer < 0 && chest == false) {
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			if (salt <= 0) {
-				vel = b2Vec2(-speed, -GRAVITY_Y);
+
+			//L02: DONE 4: modify the position of the player using arrow keys and render the texture
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+				//
 			}
-			if (salt > 0) {
-				vel = b2Vec2(-speed, saltvel);
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+				//
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				if (salt <= 0) {
+					vel = b2Vec2(-speed, -GRAVITY_Y);
+				}
+				if (salt > 0) {
+					vel = b2Vec2(-speed, saltvel);
+				}
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				if (salt <= 0) {
+					vel = b2Vec2(speed, -GRAVITY_Y);
+				}
+				if (salt > 0) {
+					vel = b2Vec2(speed, saltvel);
+				}
+			}
+			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt <= 0 && doublejump >= 1 && doublejumptimer <= 0) {
+				salt = 16;
+				vel = b2Vec2(0, saltvel);
+				doublejump--;
+				doublejumptimer = 20;
 			}
 		}
+		//Set the velocity of the pbody of the player
+		pbody->body->SetLinearVelocity(vel);
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			if (salt <= 0) {
-				vel = b2Vec2(speed, -GRAVITY_Y);
+		//Update player position in pixels
+
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+		app->render->DrawTexture(texture, position.x + 3, position.y + 5);
+
+		b2Vec2 xdd = pbody->body->GetPosition();
+		xdd.x = ((-xdd.x) * 50 * 3) + 600;
+		if (xdd.x < -96 && xdd.x >-4896) {
+			app->render->camera.x = xdd.x;
+		}
+
+		if (xdd.x < -2950 && bandera == false) {
+			app->audio->PlayFx(checkpointsound);
+			death = b2Vec2(24, 1);
+			bandera = true;
+		}
+
+		if (deathbool == true) {
+			pbody->body->SetTransform(death, deathangle);
+			doublejump = 0;
+			deathbool = false;
+		}
+		if (deathtimer == 0) {
+			if (bandera == false) {
+				app->render->camera.x = -96;
 			}
-			if (salt > 0) {
-				vel = b2Vec2(speed, saltvel);
+			if (bandera == true) {
+				app->render->camera.x = -2950;
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt <= 0 && doublejump >= 1 && doublejumptimer<=0) {
-			salt = 16;
-			vel = b2Vec2(0, saltvel);
-			doublejump--;
-			doublejumptimer = 20;
-		}
-	}
-	//Set the velocity of the pbody of the player
-	pbody->body->SetLinearVelocity(vel);
+		deathtimer--;
 
-	//Update player position in pixels
-	
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-	app->render->DrawTexture(texture, position.x+3 , position.y+5);
-	
-	b2Vec2 xdd = pbody->body->GetPosition();
-	xdd.x = ((-xdd.x) * 50 * 3) + 600;
-	xdd.y = ((-xdd.y) * 50 * 3) + 600;
-	if (xdd.x < -96 && xdd.x >-4896) {
-		app->render->camera.x = xdd.x;
-	}	
-	
-	if (xdd.x < -2950 && bandera==false) {
-		app->audio->PlayFx(checkpointsound);
-		death = b2Vec2(24, 1);
-		bandera = true;
+		doublejumptimer--;
+		salt--;
 	}
-	deathtimer--;
-
-	if (deathbool==true) {
-		pbody->body->SetTransform(death, deathangle);
-		doublejump = 0;
-		deathbool = false;
-	}
-	if (deathtimer == 0) {
-		if (bandera == false) {
-			app->render->camera.x = -96;
-		}
-
-	}
-	
-	doublejumptimer--;
-	salt--;
 	return true;
 }
 
@@ -171,6 +191,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			deathbool = true;
 			deathtimer = 120;
 			app->audio->PlayFx(deathsound);
+			break;
+		case ColliderType::CHEST:
+			LOG("Collision UNKNOWN");
+			chest = true;
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
