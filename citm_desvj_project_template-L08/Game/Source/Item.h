@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "SDL/include/SDL.h"
-
+#include "Physics.h"
 struct SDL_Texture;
 
 class Item : public Entity
@@ -25,14 +25,13 @@ public:
 public:
 
 	bool isPicked = false;
-
+	PhysBody* coinbody;
 private:
-
+	b2Vec2 coinpick = b2Vec2(0, 0);
 	SDL_Texture* texture;
 	const char* texturePath;
 
 	//DONE 4: Add a physics to an item
-	PhysBody* pbody;
 };
 
 #endif // __ITEM_H__

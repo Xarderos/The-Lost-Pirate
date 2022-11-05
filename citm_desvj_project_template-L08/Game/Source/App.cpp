@@ -8,7 +8,7 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
-
+#include "Item.h"
 #include "Defs.h"
 #include "Log.h"
 

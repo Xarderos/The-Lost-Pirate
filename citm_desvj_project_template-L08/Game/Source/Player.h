@@ -32,10 +32,11 @@ public:
 	int saltvel = -6;
 	int deathtimer = 0;
 	bool deathbool;
+	int doublejumptimer;
 	b2Vec2 vel = b2Vec2(0, 0);
-	b2Vec2 death = b2Vec2(2, 2);
+	b2Vec2 death = b2Vec2(2, 1);
 	float32 deathangle = 0;
-	
+
 public:
 
 private:
@@ -49,6 +50,7 @@ private:
 
 	int pickCoinFxId;
 	int deathsound;
+	int checkpointsound;
 
 };
 
