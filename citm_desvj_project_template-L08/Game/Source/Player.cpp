@@ -49,7 +49,10 @@ bool Player::Start() {
 
 	//initialize audio effect - !! Path is hardcoded, should be loaded from config.xml
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/coinPickup.ogg");
+	deathsound= app->audio->LoadFx("Assets/Audio/Fx/DeathsoundinMinecraft.ogg");
 	bandera = false;
+	deathbool = false;
+	deathtimer = 0;
 	return true;
 }
 
@@ -60,7 +63,7 @@ bool Player::Update()
 
 	int speed = 4; 
 	
-	
+
 	if (salt <= 0) {
 		vel = b2Vec2(0, -GRAVITY_Y);
 	}
@@ -106,14 +109,23 @@ bool Player::Update()
 	
 	b2Vec2 xdd = pbody->body->GetPosition();
 	xdd.x = ((-xdd.x) * 50 * 3) + 600;
+	xdd.y = ((-xdd.y) * 50 * 3) + 600;
 	if (xdd.x < -96) {
 		app->render->camera.x = xdd.x;
 	}
 	if (xdd.x < -2950) {
 		bandera = true;
-
 	}
-	
+	deathtimer--;
+
+	if (deathbool==true) {
+		pbody->body->SetTransform(death, deathangle);
+		if (deathtimer == 0) {
+			app->render->camera.x = (-96, -96);
+			deathbool = false;
+		}
+		
+	}
 	
 	
 	salt--;
@@ -147,11 +159,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			app->entityManager->DestroyEntity(this);
+			deathbool = true;
+			deathtimer = 120;
+			app->audio->PlayFx(deathsound);
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
+			doublejump = 0;
 			break;
+		
 
 	}
 	

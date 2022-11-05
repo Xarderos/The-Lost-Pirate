@@ -30,8 +30,11 @@ public:
 	bool bandera;
 	int salt = 0;
 	int saltvel = -6;
+	int deathtimer = 0;
+	bool deathbool;
 	b2Vec2 vel = b2Vec2(0, 0);
-	b2Vec2 death = b2Vec2(0, 0);
+	b2Vec2 death = b2Vec2(2, 2);
+	float32 deathangle = 0;
 	
 public:
 
@@ -45,6 +48,7 @@ private:
 	PhysBody* pbody;
 
 	int pickCoinFxId;
+	int deathsound;
 
 };
 
