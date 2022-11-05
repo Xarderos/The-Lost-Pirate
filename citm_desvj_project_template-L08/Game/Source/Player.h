@@ -32,6 +32,7 @@ public:
 	int saltvel = -6;
 	int deathtimer = 0;
 	bool deathbool;
+	bool dreta;
 	int doublejumptimer;
 	b2Vec2 vel = b2Vec2(0, 0);
 	b2Vec2 death = b2Vec2(2, 1);
@@ -43,7 +44,9 @@ private:
 
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* menutexture;
+	SDL_Texture* menutexture2;
 	SDL_Texture* texture;
+	SDL_Texture* textureleft;
 	SDL_Texture* deathtexture;
 
 	const char* texturePath;
@@ -56,6 +59,7 @@ private:
 	int deathsound;
 	int checkpointsound;
 	int startsound;
+	int menutimer;
 };
 
 #endif // __PLAYER_H__

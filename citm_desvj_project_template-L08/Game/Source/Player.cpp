@@ -38,10 +38,13 @@ bool Player::Awake() {
 bool Player::Start() {
 	int salt;
 	//initilize textures
-	menutexture= app->tex->Load("Assets/Textures/Start.png");
+	menutexture = app->tex->Load("Assets/Textures/Start.png");
+	menutexture2 = app->tex->Load("Assets/Textures/Start2.png");
+
 	deathtexture = app->tex->Load("Assets/Textures/DeathCam.png");
 
 	texture = app->tex->Load(texturePath);
+	textureleft= app->tex->Load("Assets/Textures/Player2.png");
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 14, bodyType::DYNAMIC);
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
@@ -61,6 +64,8 @@ bool Player::Start() {
 	doublejumptimer = 0;
 	chest = false;
 	start = false;
+	dreta = true;
+	menutimer = 60;
 	return true;
 }
 
@@ -72,7 +77,16 @@ bool Player::Update()
 	}
 	if (start == false) {
 		app->render->camera.x = -10000 * 3;
+		
 		app->render->DrawTexture(menutexture, 10000, 118);
+		
+		if (menutimer > 0 && menutimer<=23) {
+			app->render->DrawTexture(menutexture2, 10000, 118);
+		}
+		if (menutimer == 0) {
+			menutimer = 45;
+		}
+		menutimer--;
 	}
 	if (start == true) {
 		if (deathtimer > 0) {
@@ -102,6 +116,7 @@ bool Player::Update()
 				if (salt > 0) {
 					vel = b2Vec2(-speed, saltvel);
 				}
+				dreta = false;
 			}
 
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
@@ -111,6 +126,8 @@ bool Player::Update()
 				if (salt > 0) {
 					vel = b2Vec2(speed, saltvel);
 				}
+				dreta = true;
+
 			}
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt <= 0 && doublejump >= 1 && doublejumptimer <= 0) {
 				salt = 16;
@@ -126,7 +143,13 @@ bool Player::Update()
 
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-		app->render->DrawTexture(texture, position.x + 3, position.y + 5);
+		if (dreta == true) {
+			app->render->DrawTexture(texture, position.x + 6, position.y + 4);
+		}
+		if (dreta == false) {
+			app->render->DrawTexture(textureleft, position.x + 6, position.y + 4);
+
+		}
 
 		b2Vec2 xdd = pbody->body->GetPosition();
 		xdd.x = ((-xdd.x) * 50 * 3) + 600;
@@ -158,6 +181,7 @@ bool Player::Update()
 		doublejumptimer--;
 		salt--;
 	}
+	
 	return true;
 }
 
@@ -191,6 +215,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			deathbool = true;
 			deathtimer = 120;
 			app->audio->PlayFx(deathsound);
+			dreta = true;
 			break;
 		case ColliderType::CHEST:
 			LOG("Collision UNKNOWN");
