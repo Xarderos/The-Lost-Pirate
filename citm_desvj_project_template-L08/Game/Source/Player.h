@@ -37,6 +37,8 @@ public:
 	bool deathbool;
 	bool dreta;
 	int doublejumptimer;
+	float xm;
+	float ym;
 	b2Vec2 vel = b2Vec2(0, 0);
 	b2Vec2 death = b2Vec2(2, 1);
 	float32 deathangle = 0;

@@ -58,6 +58,7 @@ bool Render::Start()
 	LOG("render start");
 	// back background
 	SDL_RenderGetViewport(renderer, &viewport);
+
 	return true;
 }
 
@@ -233,7 +234,7 @@ bool Render::LoadState(pugi::xml_node& data)
 {
 
 	playerposx = data.child("posi").attribute("x").as_int();
-	playerposx = data.child("posi").attribute("y").as_int();
+	playerposy = data.child("posi").attribute("y").as_int();
 
 	return true;
 }
