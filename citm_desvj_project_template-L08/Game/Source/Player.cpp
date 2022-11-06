@@ -44,6 +44,9 @@ bool Player::Start() {
 	texture = app->tex->Load(texturePath);
 	textureleft= app->tex->Load("Assets/Textures/Player2.png");
 	playerdeadtext= app->tex->Load("Assets/Textures/Dea.png");
+	closechest = app->tex->Load("Assets/Textures/chest1.png");
+	openchest = app->tex->Load("Assets/Textures/chest2.png");
+	congrats = app->tex->Load("Assets/Textures/congrats.png");
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 14, bodyType::DYNAMIC);
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
@@ -57,6 +60,7 @@ bool Player::Start() {
 	deathsound= app->audio->LoadFx("Assets/Audio/Fx/DeathsoundinMinecraft.ogg");
 	checkpointsound= app->audio->LoadFx("Assets/Audio/Fx/CheckpointSoundEffect.ogg");
 	startsound = app->audio->LoadFx("Assets/Audio/Fx/BindingofIsaacGameStartSound.ogg");
+	chestopen= app->audio->LoadFx("Assets/Audio/Fx/chestopen.ogg");
 	bandera = false;
 	deathbool = false;
 	deathtimer = 0;
@@ -75,7 +79,7 @@ bool Player::Start() {
 bool Player::Update()
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_REPEAT && start == false) {
 		app->audio->PlayFx(startsound);
 		start = true;
 	}
@@ -93,7 +97,17 @@ bool Player::Update()
 		menutimer--;
 	}
 	if (start == true) {
-		if (deathtimer > 0) {
+
+		if (chest == false) {
+			app->render->DrawTexture(closechest, 2144, 352);
+
+		}
+		if (chest == true) {
+			app->render->DrawTexture(openchest, 2144, 352);
+			app->render->DrawTexture(congrats, 2100, 200);
+
+		}
+		if (deathtimer > 0 && deathtimer < 90) {
 			app->render->camera.x = -10000 * 3;
 			app->render->DrawTexture(deathtexture, 10000, 118);
 		}
@@ -147,11 +161,14 @@ bool Player::Update()
 
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-		if (dreta == true) {
+		if (dreta == true && deathtimer < 90) {
 			app->render->DrawTexture(texture, position.x + 6, position.y + 4);
 		}
-		if (dreta == false) {
+		if (dreta == false && deathtimer < 90) {
 			app->render->DrawTexture(textureleft, position.x + 6, position.y + 4);
+		}
+		if (deathtimer > 90) {
+			app->render->DrawTexture(playerdeadtext, position.x + 6, position.y + 4);
 		}
 
 		b2Vec2 xdd = pbody->body->GetPosition();
@@ -172,7 +189,7 @@ bool Player::Update()
 			bandera = true;
 		}
 
-		if (deathbool == true) {
+		if (deathbool == true && deathtimer < 90) {
 			pbody->body->SetTransform(death, deathangle);
 			doublejump = 0;
 			deathbool = false;
@@ -196,6 +213,7 @@ bool Player::Update()
 			xm = app->render->playerposx;
 			ym = app->render->playerposy;
 			pbody->body->SetTransform({ xm,ym }, 0);
+			chest = false;
 		}
 		deathtimer--;
 
@@ -240,6 +258,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::CHEST:
 			LOG("Collision UNKNOWN");
+			app->audio->PlayFx(chestopen);
 			chest = true;
 			break;
 		case ColliderType::UNKNOWN:

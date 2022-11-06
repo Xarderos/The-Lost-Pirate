@@ -37,6 +37,8 @@ public:
 	bool deathbool;
 	bool dreta;
 	int doublejumptimer;
+	int menutimer;
+
 	float xm;
 	float ym;
 	b2Vec2 vel = b2Vec2(0, 0);
@@ -51,6 +53,10 @@ private:
 	SDL_Texture* textureleft;
 	SDL_Texture* playerdeadtext;
 	SDL_Texture* deathtexture;
+	SDL_Texture* closechest;
+	SDL_Texture* openchest;
+	SDL_Texture* congrats;
+
 
 	const char* texturePath;
 
@@ -62,7 +68,8 @@ private:
 	int deathsound;
 	int checkpointsound;
 	int startsound;
-	int menutimer;
+	int chestopen;
+
 };
 
 #endif // __PLAYER_H__
