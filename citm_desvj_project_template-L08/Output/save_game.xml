@@ -9,6 +9,6 @@
 	<entitymanager />
 	<map />
 	<renderer>
-		<posi x="22" y="6" />
+		<posi x="26" y="6" />
 	</renderer>
 </save_state>

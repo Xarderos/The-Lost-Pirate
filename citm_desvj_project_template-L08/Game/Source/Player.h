@@ -32,7 +32,7 @@ public:
 	int doublejump;
 	bool bandera;
 	int salt = 0;
-	int saltvel = -6;
+	int saltvel = -5;
 	int deathtimer = 0;
 	bool deathbool;
 	bool dreta;

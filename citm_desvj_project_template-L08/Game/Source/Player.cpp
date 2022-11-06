@@ -163,6 +163,9 @@ bool Player::Update()
 		if (xdd.x > -96) {
 			app->render->camera.x = -96;
 		}
+		if (xdd.x < -4896) {
+			app->render->camera.x = -4896;
+		}
 
 		if (xdd.x < -2950 && bandera == false) {
 			app->audio->PlayFx(checkpointsound);
