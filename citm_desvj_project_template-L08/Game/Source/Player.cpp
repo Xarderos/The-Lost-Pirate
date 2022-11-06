@@ -70,8 +70,6 @@ bool Player::Start() {
 	dreta = true;
 	menutimer = 60;
 	app->LoadGameRequest();
-	xm = app->render->playerposx;
-	ym = app->render->playerposy;
 	
 	return true;
 }
@@ -210,9 +208,7 @@ bool Player::Update()
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 			app->LoadGameRequest();
-			xm = app->render->playerposx;
-			ym = app->render->playerposy;
-			pbody->body->SetTransform({ xm,ym }, 0);
+			pbody->body->SetTransform({ (float)app->render->playerposx,(float)app->render->playerposy }, 0);
 			chest = false;
 		}
 		deathtimer--;
