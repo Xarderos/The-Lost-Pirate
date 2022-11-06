@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "Physics.h"
 #include "Window.h"
+#include "Animation.h"
 struct SDL_Texture;
 
 class Player : public Entity
@@ -56,7 +57,7 @@ private:
 	SDL_Texture* closechest;
 	SDL_Texture* openchest;
 	SDL_Texture* congrats;
-
+	Animation playeridle;
 
 	const char* texturePath;
 

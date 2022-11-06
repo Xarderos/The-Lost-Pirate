@@ -11,9 +11,13 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Item.h"
+#include "Animation.h"
 Player::Player() : Entity(EntityType::PLAYER)
 {
+
 	name.Create("Player");
+
+	
 }
 
 Player::~Player() {
