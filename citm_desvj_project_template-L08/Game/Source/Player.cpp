@@ -40,11 +40,10 @@ bool Player::Start() {
 	//initilize textures
 	menutexture = app->tex->Load("Assets/Textures/Start.png");
 	menutexture2 = app->tex->Load("Assets/Textures/Start2.png");
-
 	deathtexture = app->tex->Load("Assets/Textures/DeathCam.png");
-
 	texture = app->tex->Load(texturePath);
 	textureleft= app->tex->Load("Assets/Textures/Player2.png");
+	playerdeadtext= app->tex->Load("Assets/Textures/Dea.png");
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 14, bodyType::DYNAMIC);
 	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method

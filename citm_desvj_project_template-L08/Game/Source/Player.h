@@ -49,6 +49,7 @@ private:
 	SDL_Texture* menutexture2;
 	SDL_Texture* texture;
 	SDL_Texture* textureleft;
+	SDL_Texture* playerdeadtext;
 	SDL_Texture* deathtexture;
 
 	const char* texturePath;
