@@ -33,7 +33,7 @@ public:
 	int doublejump;
 	bool bandera;
 	int salt = 0;
-	int saltvel = -5;
+	int saltvel = -4;
 	int deathtimer = 0;
 	bool deathbool;
 	bool dreta;
@@ -57,10 +57,21 @@ private:
 	SDL_Texture* closechest;
 	SDL_Texture* openchest;
 	SDL_Texture* congrats;
+	SDL_Texture* bluegemroll;
+
 	Animation playeridleright;
 	Animation playeridleleft;
+	Animation playerrunright;
+	Animation playerrunleft;
+	Animation playerjumpright;
+	Animation playerjumpleft;
+	Animation playerdeathright;
+	Animation playerdeathleft;
+	Animation bluegem;
+
 
 	SDL_Rect rect;
+	SDL_Rect gemrect;
 
 	const char* texturePath;
 
@@ -73,6 +84,9 @@ private:
 	int checkpointsound;
 	int startsound;
 	int chestopen;
+	int jumpfx;
+
+	iPoint gempos;
 
 };
 
