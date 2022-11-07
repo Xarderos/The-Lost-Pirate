@@ -16,13 +16,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 
 	name.Create("Player");
-	playeridle.PushBack({ 0, 0, 66, 42 });
-	playeridle.PushBack({ 66, 0, 66, 42 });
-	playeridle.PushBack({ 132, 0, 66, 42 });
-	playeridle.PushBack({ 198, 0, 66, 42 });
-	playeridle.PushBack({ 264, 0, 66, 42 });
-	playeridle.loop = true;
-	playeridle.speed = 0.15f;
+	playeridleright.PushBack({ 0, 0, 66, 42 });
+	playeridleright.PushBack({ 66, 0, 66, 42 });
+	playeridleright.PushBack({ 132, 0, 66, 42 });
+	playeridleright.PushBack({ 198, 0, 66, 42 });
+	playeridleright.PushBack({ 264, 0, 66, 42 });
+	playeridleright.loop = true;
+	playeridleright.speed = 0.15f;
 }
 
 Player::~Player() {
@@ -143,6 +143,7 @@ bool Player::Update()
 					vel = b2Vec2(-speed, saltvel);
 				}
 				dreta = false;
+				idle = false;
 			}
 
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
@@ -153,6 +154,7 @@ bool Player::Update()
 					vel = b2Vec2(speed, saltvel);
 				}
 				dreta = true;
+				idle = false;
 
 			}
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && salt <= 0 && doublejump >= 1 && doublejumptimer <= 0) {
@@ -160,6 +162,8 @@ bool Player::Update()
 				vel = b2Vec2(0, saltvel);
 				doublejump--;
 				doublejumptimer = 20;
+				idle = false;
+
 			}
 		}
 		//Set the velocity of the pbody of the player
@@ -170,7 +174,7 @@ bool Player::Update()
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 		if (dreta == true && deathtimer < 90) {
-			rect = playeridle.GetCurrentFrame();
+			rect = playeridleright.GetCurrentFrame();
 		}
 		if (dreta == false && deathtimer < 90) {
 			rect = { 0,0 };
@@ -229,7 +233,7 @@ bool Player::Update()
 		
 	}
 	
-	playeridle.Update();
+	playeridleright.Update();
 	return true;
 }
 

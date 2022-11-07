@@ -39,7 +39,7 @@ public:
 	bool dreta;
 	int doublejumptimer;
 	int menutimer;
-
+	bool idle;
 	float xm;
 	float ym;
 	b2Vec2 vel = b2Vec2(0, 0);
@@ -57,7 +57,9 @@ private:
 	SDL_Texture* closechest;
 	SDL_Texture* openchest;
 	SDL_Texture* congrats;
-	Animation playeridle;
+	Animation playeridleright;
+	Animation playeridleleft;
+
 	SDL_Rect rect;
 
 	const char* texturePath;
