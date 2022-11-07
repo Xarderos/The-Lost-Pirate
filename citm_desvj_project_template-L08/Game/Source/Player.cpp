@@ -114,10 +114,7 @@ bool Player::Update()
 			app->render->DrawTexture(congrats, 2100, 200);
 
 		}
-		if (deathtimer > 0 && deathtimer < 90) {
-			app->render->camera.x = -10000 * 3;
-			app->render->DrawTexture(deathtexture, 10000, 118);
-		}
+		
 		// L07 DONE 5: Add physics to the player - updated player position using physics
 		int speed = 4;
 		if (salt <= 0) {
@@ -230,7 +227,10 @@ bool Player::Update()
 		doublejumptimer--;
 		salt--;
 		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
-		
+		if (deathtimer > 0 && deathtimer < 90) {
+			app->render->camera.x = -10000 * 3;
+			app->render->DrawTexture(deathtexture, 10000, 118);
+		}
 	}
 	
 	playeridleright.Update();

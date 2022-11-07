@@ -18,12 +18,12 @@
 
   <audio>
     <music volume="100"/>
-    <fx volume="30"/>
+    <fx volume="100"/>
   </audio>
 
   <!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
   <scene>
-    <player x="50" y="286" texturepath="Assets/Textures/IdleSheet.png"/>
+    <player x="50" y="286" texturepath="Assets/Textures/piratespritesheet.png"/>
     <item x="250" y="300" texturepath="Assets/Textures/goldCoin.png"/>
 
   </scene>
