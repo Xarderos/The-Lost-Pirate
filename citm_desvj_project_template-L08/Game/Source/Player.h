@@ -79,7 +79,6 @@ private:
 	PhysBody* pbody;
 	bool start;
 	bool chest;
-	int pickCoinFxId;
 	int deathsound;
 	int checkpointsound;
 	int startsound;

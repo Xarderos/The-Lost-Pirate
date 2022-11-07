@@ -5,6 +5,8 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Physics.h"
+#include "Animation.h"
+
 struct SDL_Texture;
 
 class Item : public Entity
@@ -22,10 +24,15 @@ public:
 
 	bool CleanUp();
 
+	void OnCollision(PhysBody* physA, PhysBody* physB);
+
 public:
 
 	bool isPicked = false;
 	PhysBody* coinbody;
+	int pickCoinFxId;
+	Animation coin;
+	SDL_Rect coinframe;
 private:
 	b2Vec2 coinpick = b2Vec2(0, 0);
 	SDL_Texture* texture;

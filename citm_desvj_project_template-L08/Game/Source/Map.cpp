@@ -7,7 +7,7 @@
 #include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
-
+#include "Item.h"
 #include <math.h>
 #include "SDL_image/include/SDL_image.h"
 
@@ -227,6 +227,10 @@ bool Map::Load()
                         PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
                         mapCollider->ctype = ColliderType::CHEST;
                      
+                    }
+                    if (gid == 100) {
+                        Item* coin = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+                        coin->position = pos;
                     }
                 }
             }
