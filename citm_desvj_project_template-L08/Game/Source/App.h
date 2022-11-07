@@ -89,6 +89,7 @@ public:
 	Scene* scene;
 	EntityManager* entityManager;
 	Map* map;
+	Map* map2;
 	//L07 DONE 2: Add Physics module
 	Physics* physics;
 

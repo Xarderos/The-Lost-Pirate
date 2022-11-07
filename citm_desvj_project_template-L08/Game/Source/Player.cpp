@@ -16,8 +16,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 {
 
 	name.Create("Player");
-
-	
+	playeridle.PushBack({ 0, 0, 66, 42 });
+	playeridle.PushBack({ 66, 0, 66, 42 });
+	playeridle.PushBack({ 132, 0, 66, 42 });
+	playeridle.PushBack({ 198, 0, 66, 42 });
+	playeridle.PushBack({ 264, 0, 66, 42 });
+	playeridle.loop = true;
+	playeridle.speed = 0.15f;
 }
 
 Player::~Player() {
@@ -117,6 +122,7 @@ bool Player::Update()
 		int speed = 4;
 		if (salt <= 0) {
 			vel = b2Vec2(0, -GRAVITY_Y);
+			
 		}
 		if (deathtimer < 0 && chest == false) {
 
@@ -164,9 +170,10 @@ bool Player::Update()
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 		if (dreta == true && deathtimer < 90) {
-			app->render->DrawTexture(texture, position.x + 6, position.y + 4);
+			rect = playeridle.GetCurrentFrame();
 		}
 		if (dreta == false && deathtimer < 90) {
+			rect = { 0,0 };
 			app->render->DrawTexture(textureleft, position.x + 6, position.y + 4);
 		}
 		if (deathtimer > 90) {
@@ -174,7 +181,7 @@ bool Player::Update()
 		}
 
 		b2Vec2 xdd = pbody->body->GetPosition();
-		xdd.x = ((-xdd.x) * 50 * 3) + 600;
+		xdd.x = ((-xdd.x) * 50 * app->win->GetScale()) + 600;
 		if (xdd.x < -96 && xdd.x >-4896) {
 			app->render->camera.x = xdd.x;
 		}
@@ -216,11 +223,13 @@ bool Player::Update()
 			chest = false;
 		}
 		deathtimer--;
-
 		doublejumptimer--;
 		salt--;
+		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+		
 	}
 	
+	playeridle.Update();
 	return true;
 }
 
@@ -233,7 +242,6 @@ bool Player::CleanUp()
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	// L07 DONE 7: Detect the type of collision
-
 	switch (physB->ctype)
 	{
 		case ColliderType::ITEM:
@@ -257,7 +265,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			dreta = true;
 			break;
 		case ColliderType::CHEST:
-			LOG("Collision UNKNOWN");
+			LOG("Collision CHESTO");
 			app->audio->PlayFx(chestopen);
 			chest = true;
 			break;
@@ -269,6 +277,5 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	}
 	
-
-
 }
+

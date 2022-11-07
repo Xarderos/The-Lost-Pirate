@@ -58,6 +58,7 @@ private:
 	SDL_Texture* openchest;
 	SDL_Texture* congrats;
 	Animation playeridle;
+	SDL_Rect rect;
 
 	const char* texturePath;
 

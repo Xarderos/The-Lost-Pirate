@@ -4,7 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Physics.h"
-
+#include "EntityManager.h"
 #include "Defs.h"
 #include "Log.h"
 
@@ -226,6 +226,7 @@ bool Map::Load()
                     if (gid == 99){
                         PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
                         mapCollider->ctype = ColliderType::CHEST;
+                     
                     }
                 }
             }
