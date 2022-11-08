@@ -115,7 +115,9 @@ bool Player::Start() {
 	playerdeadtext= app->tex->Load("Assets/Textures/Dea.png");
 	closechest = app->tex->Load("Assets/Textures/chest1.png");
 	openchest = app->tex->Load("Assets/Textures/chest2.png");
+	doublejumptext = app->tex->Load("Assets/Textures/doublejumptext.png");
 	bluegemroll = app->tex->Load("Assets/Textures/bluegemspritesheet.png");
+
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 14, bodyType::DYNAMIC);
@@ -131,6 +133,7 @@ bool Player::Start() {
 	startsound = app->audio->LoadFx("Assets/Audio/Fx/BindingofIsaacGameStartSound.ogg");
 	chestopen= app->audio->LoadFx("Assets/Audio/Fx/chestopen.ogg");
 	jumpfx= app->audio->LoadFx("Assets/Audio/Fx/JumpFX.ogg");
+	winsongfx=app->audio->LoadFx("Assets/Audio/Fx/winsongfx.ogg");
 	bandera = false;
 	deathbool = false;
 	deathtimer = 0;
@@ -335,8 +338,13 @@ bool Player::Update()
 			app->render->DrawTexture(deathtexture, 10000, 118);
 			dreta = true;
 		}
+
 	}
-	
+	if (bandera == true) {
+		
+		app->render->DrawTexture(doublejumptext, 1120, 220);
+
+	}
 	return true;
 }
 
@@ -373,6 +381,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::CHEST:
 			LOG("Collision CHESTO");
 			app->audio->PlayFx(chestopen);
+			app->audio->PlayFx(winsongfx);
 			chest = true;
 			physB->GetPosition(gempos.x, gempos.y);
 			break;

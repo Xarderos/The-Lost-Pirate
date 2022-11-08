@@ -57,6 +57,7 @@ private:
 	SDL_Texture* closechest;
 	SDL_Texture* openchest;
 	SDL_Texture* congrats;
+	SDL_Texture* doublejumptext;
 	SDL_Texture* bluegemroll;
 
 	Animation playeridleright;
@@ -84,7 +85,7 @@ private:
 	int startsound;
 	int chestopen;
 	int jumpfx;
-
+	int winsongfx;
 	iPoint gempos;
 
 };
