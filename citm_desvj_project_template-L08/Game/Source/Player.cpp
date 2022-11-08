@@ -171,7 +171,9 @@ bool Player::Update()
 		menutimer--;
 	}
 	if (start == true) {
-
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+			pbody->body->SetTransform({ 2,1 },0);
+		}
 		if (chest == false) {
 			app->render->DrawTexture(closechest, 2144, 352);
 
@@ -338,13 +340,17 @@ bool Player::Update()
 			app->render->DrawTexture(deathtexture, 10000, 118);
 			dreta = true;
 		}
+		if (bandera == true) {
 
-	}
-	if (bandera == true) {
-		
-		app->render->DrawTexture(doublejumptext, 1120, 220);
+			app->render->DrawTexture(doublejumptext, 1120, 220);
 
+		}
+		if (app->scene->godmode == true) {
+			doublejump = 2;
+			doublejumptimer = 0;
+		}
 	}
+
 	return true;
 }
 
@@ -374,9 +380,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
-			deathbool = true;
-			deathtimer = 120;
-			app->audio->PlayFx(deathsound);
+			if (app->scene->godmode == false) {
+				deathbool = true;
+				deathtimer = 120;
+				app->audio->PlayFx(deathsound);
+			}
 			break;
 		case ColliderType::CHEST:
 			LOG("Collision CHESTO");

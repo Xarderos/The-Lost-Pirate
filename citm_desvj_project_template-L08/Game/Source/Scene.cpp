@@ -57,7 +57,7 @@ bool Scene::Start()
 		app->map->mapData.tileWidth,
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
-
+	godmode = false;
 	app->win->SetTitle(title.GetString());
 	return true;
 }
@@ -73,7 +73,15 @@ bool Scene::Update(float dt)
 {
 	// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
 
-		
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		godmode = !godmode;
+		if(godmode==true)
+			LOG("GODMODE ACTIVATED");
+
+		if (godmode == false)
+			LOG("GODMODE DEACTIVATED");
+
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		app->render->camera.y += 10;
