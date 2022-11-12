@@ -1,9 +1,9 @@
-# {Project Name}
+# {The Lost Pirate - A humble platform}
 
 ## Description
 
-{project description}
-
+A platform game made by two CITM students.
+!WARNING!: Volume can be pretty loud in some systems.
 ## Key Features
 
  - {Feature01}
@@ -13,7 +13,15 @@
  
 ## Controls
 
- - {ControlsScheme}
+ - A->Move left
+ - D->Move right
+ - Space->Jump/Doublejump
+ - F1 Start from the first level
+ - F3 Start from the beginning of the current level
+ - F5 Save the current player position
+ - F6 Load the saved player position
+ - F9 View colliders / logic
+ - F10 God Mode(death disabled, no cooldown doublejump(similar to flying))
 
 ## Developers
 

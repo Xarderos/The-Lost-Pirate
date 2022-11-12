@@ -171,8 +171,8 @@ bool Player::Update()
 		menutimer--;
 	}
 	if (start == true) {
-		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
-			pbody->body->SetTransform({ 2,1 },0);
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+			pbody->body->SetTransform({ 2,7 },0);
 		}
 		if (chest == false) {
 			app->render->DrawTexture(closechest, 2144, 352);
