@@ -3,13 +3,15 @@
 ## Description
 
 A platform game made by two CITM students.
+
 !WARNING!: Volume can be pretty loud in some systems.
+
 ## Key Features
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - 1 Map
+ - Player and items animations
+ - Doublejump
+ - Amazing fx
  
 ## Controls
 
@@ -25,10 +27,9 @@ A platform game made by two CITM students.
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
+ - Xavier Prats (Xarderos)
+ - Joan Giol (GHOSTVCL)
+
 
 ## License
 
