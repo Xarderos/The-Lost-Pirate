@@ -1,4 +1,4 @@
-# {The Lost Pirate - A humble platform}
+# The Lost Pirate - A humble platform
 
 ## Description
 
