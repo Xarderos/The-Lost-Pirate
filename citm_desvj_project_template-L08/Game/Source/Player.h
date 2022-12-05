@@ -39,6 +39,7 @@ public:
 	bool dreta;
 	int doublejumptimer;
 	int menutimer;
+	int atactimer;
 	bool idle;
 	float xm;
 	float ym;
@@ -60,6 +61,7 @@ private:
 	SDL_Texture* doublejumptext;
 	SDL_Texture* bluegemroll;
 
+
 	Animation playeridleright;
 	Animation playeridleleft;
 	Animation playerrunright;
@@ -69,14 +71,17 @@ private:
 	Animation playerdeathright;
 	Animation playerdeathleft;
 	Animation bluegem;
+	Animation atac;
 
 
 	SDL_Rect rect;
 	SDL_Rect gemrect;
+	SDL_Rect atacanim;
 
 	const char* texturePath;
 
 	// L07 DONE 5: Add physics to the player - declare a Physics body
+	PhysBody* espasa;
 	PhysBody* pbody;
 	bool start;
 	bool chest;

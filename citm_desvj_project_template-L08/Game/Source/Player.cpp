@@ -83,6 +83,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 	bluegem.loop = true;
 	bluegem.speed = 0.13f;
 
+	atac.PushBack({ 0,480,64,40 });
+	atac.PushBack({ 64,480,64,40 });
+	atac.PushBack({ 128,480,64,40 });
+	atac.PushBack({ 0,0,0,0 });
+	atac.loop = false;
+	atac.speed = 0.14f;
+
 }
 
 Player::~Player() {
@@ -138,6 +145,7 @@ bool Player::Start() {
 	deathbool = false;
 	deathtimer = 0;
 	doublejumptimer = 0;
+	atactimer = 0;
 	chest = false;
 	start = false;
 	dreta = true;
@@ -146,6 +154,8 @@ bool Player::Start() {
 
 	menutimer = 60;
 	app->LoadGameRequest();
+
+	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
 	
 	return true;
 }
@@ -332,7 +342,7 @@ bool Player::Update()
 		deathtimer--;
 		doublejumptimer--;
 		salt--;
-		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+		
 		
 
 		if (deathtimer > 0 && deathtimer < 90) {
@@ -351,6 +361,27 @@ bool Player::Update()
 		}
 	}
 
+
+	if (dreta == true)
+	{
+		espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.45f,pbody->body->GetPosition().y + 0.15f }, 0);
+	}
+	if (dreta == false)
+	{
+		espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		atac.Reset();
+	}
+	if (atac.HasFinished() == false)
+	{
+		rect = atac.GetCurrentFrame();
+		atac.Update();
+	}
+
+	app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
 	return true;
 }
 
