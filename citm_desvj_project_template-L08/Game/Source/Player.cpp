@@ -107,16 +107,16 @@ bool Player::Awake() {
 bool Player::Start() {
 	int salt;
 	//initilize textures
-	menutexture = app->tex->Load("Assets/Textures/Start.png");
-	menutexture2 = app->tex->Load("Assets/Textures/Start2.png");
-	deathtexture = app->tex->Load("Assets/Textures/DeathCam.png");
+	menutexture = app->tex->Load("Assets/Textures/Screens/Start.png");
+	menutexture2 = app->tex->Load("Assets/Textures/Screens/Start2.png");
+	deathtexture = app->tex->Load("Assets/Textures/Screens/DeathCam.png");
 	texture = app->tex->Load(texturePath);
 	textureleft= app->tex->Load("Assets/Textures/Player2.png");
 	playerdeadtext= app->tex->Load("Assets/Textures/Dea.png");
 	closechest = app->tex->Load("Assets/Textures/chest1.png");
 	openchest = app->tex->Load("Assets/Textures/chest2.png");
-	doublejumptext = app->tex->Load("Assets/Textures/doublejumptext.png");
-	bluegemroll = app->tex->Load("Assets/Textures/bluegemspritesheet.png");
+	doublejumptext = app->tex->Load("Assets/Textures/Screens/doublejumptext.png");
+	bluegemroll = app->tex->Load("Assets/Textures/Spritesheets/bluegemspritesheet.png");
 
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
