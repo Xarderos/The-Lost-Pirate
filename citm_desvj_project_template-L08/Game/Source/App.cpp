@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "Item.h"
+#include "Enemy1.h"
 #include "Defs.h"
 #include "Log.h"
 
