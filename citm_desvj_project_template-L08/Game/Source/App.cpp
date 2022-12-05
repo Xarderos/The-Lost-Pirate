@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Item.h"
 #include "Enemy1.h"
+#include "Enemy2.h"
 #include "Defs.h"
 #include "Log.h"
 
