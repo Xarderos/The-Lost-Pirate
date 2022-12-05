@@ -24,7 +24,9 @@ bool Enemy1::Awake() {
 
 bool Enemy1::Start() {
 
-
+	ebody = app->physics->CreateRectangleSensor(position.x + 15, position.y + 20, 10, 10, bodyType::STATIC);
+	ebody->ctype = ColliderType::DEATH;
+	ebody->listener = this;
 	return true;
 }
 

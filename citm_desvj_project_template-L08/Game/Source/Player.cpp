@@ -156,7 +156,7 @@ bool Player::Start() {
 	app->LoadGameRequest();
 
 	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
-	
+	espasa->ctype = ColliderType::ESPASA;
 	return true;
 }
 

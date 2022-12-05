@@ -8,6 +8,8 @@
 #include "Defs.h"
 #include "Log.h"
 #include "Item.h"
+#include "Enemy1.h"
+#include "Enemy2.h"
 #include <math.h>
 #include "SDL_image/include/SDL_image.h"
 
@@ -231,7 +233,17 @@ bool Map::Load()
                     if (gid == 100) {
                         Item* coin = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
                         coin->position = pos;
+                    }                
+                    if (gid == 101) {
+                        Enemy1* enemy1 = (Enemy1*)app->entityManager->CreateEntity(EntityType::ENEMY1);
+                        enemy1->position = pos;
+
                     }
+                    if (gid == 102) {
+                        Enemy2* enemy2 = (Enemy2*)app->entityManager->CreateEntity(EntityType::ENEMY2);
+                        enemy2->position = pos;
+                    }
+                    
                 }
             }
         }

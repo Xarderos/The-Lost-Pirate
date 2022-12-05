@@ -1,5 +1,5 @@
-#ifndef __ENEMY1_H__
-#define __ENEMY1_H__
+#ifndef __ENEMY2_H__
+#define __ENEMY2_H__
 
 #include "Entity.h"
 #include "Point.h"

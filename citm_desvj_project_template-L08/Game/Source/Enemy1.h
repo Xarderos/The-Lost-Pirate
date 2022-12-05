@@ -27,6 +27,7 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
+	PhysBody* ebody;
 
 	
 private:
