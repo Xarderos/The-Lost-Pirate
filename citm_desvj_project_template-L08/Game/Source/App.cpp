@@ -13,7 +13,7 @@
 #include "Enemy2.h"
 #include "Defs.h"
 #include "Log.h"
-
+#include "Pathfinding.h"
 #include <iostream>
 #include <sstream>
 
@@ -32,7 +32,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene = new Scene();
 	entityManager = new EntityManager();
 	map = new Map();
-
+	pathfinding = new PathFinding();
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	AddModule(input);
@@ -44,7 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene);
 	AddModule(entityManager);
 	AddModule(map);
-
+	AddModule(pathfinding);
 	// Render last to swap buffer
 	AddModule(render);
 }

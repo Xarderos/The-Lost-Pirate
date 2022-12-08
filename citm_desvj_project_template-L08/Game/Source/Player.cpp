@@ -157,8 +157,8 @@ bool Player::Start() {
 	app->LoadGameRequest();
 
 	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
-	espasa->listener = this;
 	espasa->ctype = ColliderType::ESPASA;
+
 
 	atacD.currentFrame = 4;
 	return true;

@@ -121,7 +121,7 @@ void Enemy1::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 
-	case ColliderType::ESPASA:
+	case ColliderType::PLAYER:
 
 		isdead = true;
 		physA->body->DestroyFixture(physA->body->GetFixtureList());

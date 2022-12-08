@@ -22,7 +22,7 @@
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Enemy1.cpp" />
     <ClCompile Include="Source\Enemy2.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\citm_desvj_project_template-L12_Pathfinding_Astar_Pro_solution\Game\Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -69,7 +69,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Enemy1.h" />
     <ClInclude Include="Source\Enemy2.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\citm_desvj_project_template-L12_Pathfinding_Astar_Pro_solution\Game\Source\Pathfinding.h" />
+    <ClInclude Include="Source\Pathfinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
