@@ -156,7 +156,7 @@ bool Player::Start() {
 	menutimer = 60;
 	app->LoadGameRequest();
 
-	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
+	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, DYNAMIC);
 	espasa->ctype = ColliderType::ESPASA;
 
 
@@ -382,7 +382,19 @@ bool Player::Update()
 		}
 		if (dreta == false)
 		{
-			espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
+			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacD.currentFrame > 2)
+			{
+				atacD.Reset();
+			}
+			if (atacD.currentFrame < 3) {
+				espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
+				rect = atacD.GetCurrentFrame();
+				atacD.Update();
+			}
+			else {
+				espasa->body->SetTransform({ 0,0 }, 0);
+
+			}
 		}
 
 		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
@@ -426,14 +438,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				app->audio->PlayFx(deathsound);
 			}
 			break;
-		//case ColliderType::ENEMY:
-		//	LOG("Collision ENEMY");
-		//	if (app->scene->godmode == false) {
-		//		deathbool = true;
-		//		deathtimer = 120;
-		//		app->audio->PlayFx(deathsound);
-		//	}
-		//	break;
+		case ColliderType::ENEMY:
+			LOG("Collision ENEMY");
+			if (app->scene->godmode == false) {
+				deathbool = true;
+				deathtimer = 120;
+				app->audio->PlayFx(deathsound);
+			}
+			break;
 		case ColliderType::CHEST:
 			LOG("Collision CHESTO");
 			app->audio->PlayFx(chestopen);
@@ -444,6 +456,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
 		
+			break;
+
+		default:
+
 			break;
 		
 

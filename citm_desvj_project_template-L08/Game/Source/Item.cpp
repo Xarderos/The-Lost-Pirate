@@ -72,10 +72,16 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->audio->PlayFx(pickCoinFxId);
 		isPicked = true;
 		break;
+	
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 
 		break;
+
+	default:
+
+		break;
+
 
 
 	}

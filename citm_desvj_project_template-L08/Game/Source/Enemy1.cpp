@@ -92,7 +92,7 @@ bool Enemy1::Start() {
 
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Crab.png");
 
-	ebody = app->physics->CreateRectangleSensor(position.x + 15, position.y + 24, 20, 15, bodyType::STATIC);
+	ebody = app->physics->CreateRectangle(position.x + 15, position.y + 24, 20, 15, bodyType::DYNAMIC);
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
 	isdead = false;
@@ -104,7 +104,10 @@ bool Enemy1::Update()
 	if (isdead == false) {
 		cranc = crabidle.GetCurrentFrame();
 		crabidle.Update();
-		app->render->DrawTexture(texture, position.x - 23, position.y + 4, &cranc);
+		app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x)-36, METERS_TO_PIXELS(ebody->body->GetPosition().y)-20, &cranc);
+	}
+	if (isdead == true) {
+		ebody->body->SetTransform({ -100,-100 }, 0);
 	}
 
 
@@ -121,16 +124,19 @@ void Enemy1::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 
-	case ColliderType::PLAYER:
+	case ColliderType::ESPASA:
 
 		isdead = true;
-		physA->body->DestroyFixture(physA->body->GetFixtureList());
 
 		break;
 
 	case ColliderType::UNKNOWN:
 
 		LOG("Collision UNKNOWN");
+
+		break;
+
+	default:
 
 		break;
 
