@@ -157,6 +157,7 @@ bool Player::Start() {
 	app->LoadGameRequest();
 
 	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
+	espasa->listener = this;
 	espasa->ctype = ColliderType::ESPASA;
 
 	atacD.currentFrame = 4;
@@ -365,7 +366,7 @@ bool Player::Update()
 		if (dreta == true)
 		{
 
-			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacD.currentFrame > 2)
 			{
 				atacD.Reset();
 			}
@@ -425,14 +426,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				app->audio->PlayFx(deathsound);
 			}
 			break;
-		case ColliderType::ENEMY:
-			LOG("Collision ENEMY");
-			if (app->scene->godmode == false) {
-				deathbool = true;
-				deathtimer = 120;
-				app->audio->PlayFx(deathsound);
-			}
-			break;
+		//case ColliderType::ENEMY:
+		//	LOG("Collision ENEMY");
+		//	if (app->scene->godmode == false) {
+		//		deathbool = true;
+		//		deathtimer = 120;
+		//		app->audio->PlayFx(deathsound);
+		//	}
+		//	break;
 		case ColliderType::CHEST:
 			LOG("Collision CHESTO");
 			app->audio->PlayFx(chestopen);
