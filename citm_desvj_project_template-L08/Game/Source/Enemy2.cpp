@@ -19,9 +19,9 @@ Enemy2::Enemy2() : Entity(EntityType::ENEMY2)
 	seashellidle.PushBack({ 96,152,48,38 });
 	seashellidle.PushBack({ 144,152,48,38 });
 	seashellidle.PushBack({ 192,152,48,38 });
-	seashellidle.PushBack({ 240,152,48,38 });
+	seashellidle.PushBack({ 240,114,48,38 });
 	seashellidle.loop = true;
-	seashellidle.speed = 0.1f;
+	seashellidle.speed = 0.13f;
 
 }
 

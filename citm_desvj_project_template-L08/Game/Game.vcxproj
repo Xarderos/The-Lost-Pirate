@@ -95,6 +95,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Desktop\citm_desvj_project_template-L12_Pathfinding_Astar_Pro_solution\Game\Source\Pathfinding.cpp" />
     <ClCompile Include="Source\Enemy1.cpp" />
     <ClCompile Include="Source\Enemy2.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="Source\Render.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClInclude Include="..\..\..\..\..\Desktop\citm_desvj_project_template-L12_Pathfinding_Astar_Pro_solution\Game\Source\Pathfinding.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Enemy1.h" />
     <ClInclude Include="Source\Enemy2.h" />
