@@ -28,8 +28,8 @@ public:
 
 public:
 	PhysBody* ebody;
-
-	
+	Animation crab;
+	SDL_Rect cranc;
 private:
 	
 	SDL_Texture* texture;
