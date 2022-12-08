@@ -71,7 +71,7 @@ private:
 	Animation playerdeathright;
 	Animation playerdeathleft;
 	Animation bluegem;
-	Animation atac;
+	Animation atacD;
 
 
 	SDL_Rect rect;

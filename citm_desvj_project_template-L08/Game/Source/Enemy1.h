@@ -39,6 +39,7 @@ public:
 	Animation crabdeadhit;
 	Animation crabdeadground;
 	SDL_Rect cranc;
+	bool isdead;
 private:
 	
 	SDL_Texture* texture;

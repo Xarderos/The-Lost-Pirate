@@ -26,11 +26,12 @@ enum bodyType {
 enum class ColliderType {
 	PLAYER, 
 	ITEM,
+	ESPASA,
 	PLATFORM, 
 	UNKNOWN,
 	DEATH,
-	ESPASA,
-	CHEST
+	CHEST,
+	ENEMY
 	// ..
 };
 

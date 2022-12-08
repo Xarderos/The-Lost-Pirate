@@ -83,12 +83,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 	bluegem.loop = true;
 	bluegem.speed = 0.13f;
 
-	atac.PushBack({ 0,480,64,40 });
-	atac.PushBack({ 64,480,64,40 });
-	atac.PushBack({ 128,480,64,40 });
-	atac.PushBack({ 0,0,0,0 });
-	atac.loop = false;
-	atac.speed = 0.14f;
+	atacD.PushBack({ 0,480,64,40 });
+	atacD.PushBack({ 64,480,64,40 });
+	atacD.PushBack({ 128,480,64,40 });
+	atacD.PushBack({ 0,480,64,40 });
+
+	atacD.loop = false;
+	atacD.speed = 0.15f;
 
 }
 
@@ -157,6 +158,8 @@ bool Player::Start() {
 
 	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
 	espasa->ctype = ColliderType::ESPASA;
+
+	atacD.currentFrame = 4;
 	return true;
 }
 
@@ -359,29 +362,34 @@ bool Player::Update()
 			doublejump = 2;
 			doublejumptimer = 0;
 		}
+		if (dreta == true)
+		{
+
+			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			{
+				atacD.Reset();
+			}
+			if (atacD.currentFrame < 3) {
+				espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.45f,pbody->body->GetPosition().y + 0.15f }, 0);
+				rect = atacD.GetCurrentFrame();
+				atacD.Update();
+			}
+			else {
+				espasa->body->SetTransform({ 0,0 }, 0);
+
+			}
+		}
+		if (dreta == false)
+		{
+			espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
+		}
+
+		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
 	}
 
 
-	if (dreta == true)
-	{
-		espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.45f,pbody->body->GetPosition().y + 0.15f }, 0);
-	}
-	if (dreta == false)
-	{
-		espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
-	}
 
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		atac.Reset();
-	}
-	if (atac.HasFinished() == false)
-	{
-		rect = atac.GetCurrentFrame();
-		atac.Update();
-	}
-
-	app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+	
 	return true;
 }
 
@@ -411,6 +419,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			break;
 		case ColliderType::DEATH:
 			LOG("Collision DEATH");
+			if (app->scene->godmode == false) {
+				deathbool = true;
+				deathtimer = 120;
+				app->audio->PlayFx(deathsound);
+			}
+			break;
+		case ColliderType::ENEMY:
+			LOG("Collision ENEMY");
 			if (app->scene->godmode == false) {
 				deathbool = true;
 				deathtimer = 120;

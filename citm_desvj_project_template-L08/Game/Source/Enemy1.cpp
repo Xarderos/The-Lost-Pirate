@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Player.h"
 Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 {
 	name.Create("Enemy1");
@@ -92,18 +93,20 @@ bool Enemy1::Start() {
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Crab.png");
 
 	ebody = app->physics->CreateRectangleSensor(position.x + 15, position.y + 24, 20, 15, bodyType::STATIC);
-	ebody->ctype = ColliderType::DEATH;
 	ebody->listener = this;
-
+	ebody->ctype = ColliderType::ENEMY;
+	isdead = false;
 	return true;
 }
 
 bool Enemy1::Update()
 {
+	if (isdead == false) {
+		cranc = crabidle.GetCurrentFrame();
+		crabidle.Update();
+		app->render->DrawTexture(texture, position.x - 23, position.y + 4, &cranc);
+	}
 
-	cranc = crabidle.GetCurrentFrame();
-	crabidle.Update();
-	app->render->DrawTexture(texture, position.x - 23, position.y + 4, &cranc);
 
 	return true;
 }
@@ -117,11 +120,19 @@ void Enemy1::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)
 	{
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
+
+	case ColliderType::ESPASA:
+
+		isdead = true;
+		physA->body->DestroyFixture(physA->body->GetFixtureList());
 
 		break;
 
+	case ColliderType::UNKNOWN:
+
+		LOG("Collision UNKNOWN");
+
+		break;
 
 	}
 
