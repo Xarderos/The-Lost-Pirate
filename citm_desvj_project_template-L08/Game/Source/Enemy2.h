@@ -28,6 +28,9 @@ public:
 
 public:
 
+	Animation seashellidle;
+	PhysBody* ebody;
+	SDL_Rect seashell;
 	
 private:
 	
