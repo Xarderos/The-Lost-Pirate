@@ -13,17 +13,70 @@ Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 {
 	name.Create("Enemy1");
 
-	crab.PushBack({ 0,0,72,32 });
-	crab.PushBack({ 72,0,72,32 });
-	crab.PushBack({ 144,0,72,32 });
-	crab.PushBack({ 216,0,72,32 });
-	crab.PushBack({ 288,0,72,32 });
-	crab.PushBack({ 360,0,72,32 });
-	crab.PushBack({ 432,0,72,32 });
-	crab.PushBack({ 504,0,72,32 });
-	crab.PushBack({ 576,0,72,32 });
-	crab.loop = true;
-	crab.speed = 0.2f;
+	crabidle.PushBack({ 0,0,72,32 });
+	crabidle.PushBack({ 72,0,72,32 });
+	crabidle.PushBack({ 144,0,72,32 });
+	crabidle.PushBack({ 216,0,72,32 });
+	crabidle.PushBack({ 288,0,72,32 });
+	crabidle.PushBack({ 360,0,72,32 });
+	crabidle.PushBack({ 432,0,72,32 });
+	crabidle.PushBack({ 504,0,72,32 });
+	crabidle.PushBack({ 576,0,72,32 });
+	crabidle.loop = true;
+	crabidle.speed = 0.2f;
+
+	crabrun.PushBack({ 0,32,72,32 });
+	crabrun.PushBack({ 72,32,72,32 });
+	crabrun.PushBack({ 144,32,72,32 });
+	crabrun.PushBack({ 216,32,72,32 });
+	crabrun.PushBack({ 288,32,72,32 });
+	crabrun.PushBack({ 360,32,72,32 });
+	crabrun.loop = true;
+	crabrun.speed = 0.2f;
+
+	crabjump.PushBack({ 0,64,72,32 });
+	crabjump.PushBack({ 72,64,72,32 });
+	crabjump.PushBack({ 144,64,72,32 });
+	crabjump.loop = true;
+	crabjump.speed = 0.2f;
+
+	crabfall.PushBack({ 0,96,72,32 });
+	crabfall.loop = true;
+	crabfall.speed = 0.2f;
+
+	crabground.PushBack({ 0,128,72,32 });
+	crabground.PushBack({ 72,128,72,32 });
+	crabground.loop = true;
+	crabground.speed = 0.2f;
+
+	crabattack.PushBack({ 0,192,72,32 });
+	crabattack.PushBack({ 72,192,72,32 });
+	crabattack.PushBack({ 144,192,72,32 });
+	crabattack.PushBack({ 216,192,72,32 });
+	crabattack.loop = true;
+	crabattack.speed = 0.2f;
+
+	crabhit.PushBack({ 0,224,72,32 });
+	crabhit.PushBack({ 72,224,72,32 });
+	crabhit.PushBack({ 144,224,72,32 });
+	crabhit.PushBack({ 216,224,72,32 });
+	crabhit.loop = true;
+	crabhit.speed = 0.2f;
+
+	crabdeadhit.PushBack({ 0,256,72,32 });
+	crabdeadhit.PushBack({ 72,256,72,32 });
+	crabdeadhit.PushBack({ 144,256,72,32 });
+	crabdeadhit.PushBack({ 216,256,72,32 });
+	crabdeadhit.loop = true;
+	crabdeadhit.speed = 0.2f;
+
+	crabdeadground.PushBack({ 0,288,72,32 });
+	crabdeadground.PushBack({ 72,288,72,32 });
+	crabdeadground.PushBack({ 144,288,72,32 });
+	crabdeadground.PushBack({ 216,288,72,32 });
+	crabdeadground.loop = true;
+	crabdeadground.speed = 0.2f;
+
 }
 
 Enemy1::~Enemy1() {}
@@ -48,8 +101,8 @@ bool Enemy1::Start() {
 bool Enemy1::Update()
 {
 
-	cranc = crab.GetCurrentFrame();
-	crab.Update();
+	cranc = crabidle.GetCurrentFrame();
+	crabidle.Update();
 	app->render->DrawTexture(texture, position.x - 23, position.y + 4, &cranc);
 
 	return true;

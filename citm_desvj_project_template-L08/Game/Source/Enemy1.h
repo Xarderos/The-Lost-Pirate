@@ -28,7 +28,16 @@ public:
 
 public:
 	PhysBody* ebody;
-	Animation crab;
+	Animation crabidle;
+	Animation crabrun;
+	Animation crabjump;
+	Animation crabfall;
+	Animation crabground;
+	Animation crabanticipation;
+	Animation crabattack;
+	Animation crabhit;
+	Animation crabdeadhit;
+	Animation crabdeadground;
 	SDL_Rect cranc;
 private:
 	
