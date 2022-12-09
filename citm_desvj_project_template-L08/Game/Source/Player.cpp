@@ -376,13 +376,13 @@ bool Player::Update()
 
 			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacD.currentFrame > 2)
 			{
+				app->audio->PlayFx(espasasoroll);
 				atacD.Reset();
 			}
 			if (atacD.currentFrame < 3) {
 				espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.45f,pbody->body->GetPosition().y + 0.15f }, 0);
 				rect = atacD.GetCurrentFrame();
 				atacD.Update();
-				app->audio->PlayFx(espasasoroll);
 			}
 			else {
 				espasa->body->SetTransform({ 0,0 }, 0);
@@ -393,13 +393,13 @@ bool Player::Update()
 		{
 			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacE.currentFrame > 2)
 			{
+				app->audio->PlayFx(espasasoroll);
 				atacE.Reset();
 			}
 			if (atacE.currentFrame < 3) {
 				espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
 				rect = atacE.GetCurrentFrame();
 				atacE.Update();
-				app->audio->PlayFx(espasasoroll);
 				
 			}
 			else {
