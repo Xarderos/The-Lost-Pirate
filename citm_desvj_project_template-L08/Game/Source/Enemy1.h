@@ -39,6 +39,7 @@ public:
 	Animation crabdeadhit;
 	Animation crabdeadground;
 	SDL_Rect cranc;
+	b2Vec2 vel;
 	bool isdead;
 private:
 	

@@ -167,8 +167,10 @@ bool Player::Start() {
 	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, DYNAMIC);
 	espasa->ctype = ColliderType::ESPASA;
 
-
+	hitimer = 0;
 	atacD.currentFrame = 4;
+	atacE.currentFrame = 4;
+
 	return true;
 }
 
@@ -371,7 +373,7 @@ bool Player::Update()
 			doublejump = 2;
 			doublejumptimer = 0;
 		}
-		if (dreta == true)
+		if (dreta == true && deathbool==false)
 		{
 
 			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacD.currentFrame > 2)
@@ -389,7 +391,7 @@ bool Player::Update()
 
 			}
 		}
-		if (dreta == false)
+		if (dreta == false && deathbool == false)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacE.currentFrame > 2)
 			{
@@ -409,6 +411,7 @@ bool Player::Update()
 		}
 
 		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+		hitimer--;
 	}
 
 
@@ -453,7 +456,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
 			if (app->scene->godmode == false) {
-				lifes--;
+				if (hitimer < 0) {
+					lifes--;
+					hitimer = 60;
+				}
 				if (lifes == 0) {
 					deathbool = true;
 					deathtimer = 120;

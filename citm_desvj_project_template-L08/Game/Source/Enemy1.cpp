@@ -96,7 +96,7 @@ bool Enemy1::Start() {
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
 	isdead = false;
-	
+	vel = { 0,0 };
 	return true;
 }
 
@@ -110,8 +110,10 @@ bool Enemy1::Update()
 	if (isdead == true) {
 		ebody->body->SetTransform({ -100,-100 }, 0);
 	}
-
-
+	if (app->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
+		vel = { -5,-GRAVITY_Y };
+	}
+	ebody->body->SetLinearVelocity(vel);
 	return true;
 }
 

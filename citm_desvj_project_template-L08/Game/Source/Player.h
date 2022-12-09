@@ -41,6 +41,7 @@ public:
 	int menutimer;
 	int atactimer;
 	int lifes;
+	int hitimer;
 	bool idle;
 	float xm;
 	float ym;
