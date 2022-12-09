@@ -160,7 +160,7 @@ bool Player::Start() {
 	dreta = true;
 	gempos.x = 0;
 	gempos.y = 0;
-
+	lifes = 3;
 	menutimer = 60;
 	app->LoadGameRequest();
 
@@ -448,13 +448,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				deathtimer = 120;
 				app->audio->PlayFx(deathsound);
 			}
+			lifes = 3;
 			break;
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
 			if (app->scene->godmode == false) {
-				deathbool = true;
-				deathtimer = 120;
-				app->audio->PlayFx(deathsound);
+				lifes--;
+				if (lifes == 0) {
+					deathbool = true;
+					deathtimer = 120;
+					app->audio->PlayFx(deathsound);
+					lifes = 3;
+				}
+
 			}
 			break;
 		case ColliderType::CHEST:
