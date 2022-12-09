@@ -40,6 +40,7 @@ public:
 	int doublejumptimer;
 	int menutimer;
 	int atactimer;
+	int lifes;
 	bool idle;
 	float xm;
 	float ym;

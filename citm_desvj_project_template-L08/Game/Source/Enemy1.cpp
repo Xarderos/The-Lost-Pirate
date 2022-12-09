@@ -96,6 +96,7 @@ bool Enemy1::Start() {
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
 	isdead = false;
+	
 	return true;
 }
 
