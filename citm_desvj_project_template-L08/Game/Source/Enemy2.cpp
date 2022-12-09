@@ -40,16 +40,24 @@ bool Enemy2::Start() {
 	ebody = app->physics->CreateRectangleSensor(position.x + 15, position.y + 24, 25, 20, bodyType::STATIC);
 	ebody->ctype = ColliderType::DEATH;
 	ebody->listener = this;
+	isdead = false;
 
 	return true;
 }
 
 bool Enemy2::Update()
 {
-
-	seashell = seashellidle.GetCurrentFrame();
-	seashellidle.Update();
-	app->render->DrawTexture(texture, position.x - 12, position.y - 3, &seashell);
+	if (isdead == false) 
+	{
+		seashell = seashellidle.GetCurrentFrame();
+		seashellidle.Update();
+		app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 28, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 26, &seashell);
+	}
+	
+	if (isdead == true) 
+	{
+		ebody->body->SetTransform({ -100,-100 }, 0);
+	}
 
 	return true;
 }
@@ -63,12 +71,20 @@ void Enemy2::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)
 	{
+	case ColliderType::ESPASA:
+
+		isdead = true;
+
+		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 
 		break;
 
+	default:
 
+		break;
 	}
 
 }

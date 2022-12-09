@@ -31,6 +31,7 @@ public:
 	Animation seashellidle;
 	PhysBody* ebody;
 	SDL_Rect seashell;
+	bool isdead;
 	
 private:
 	
