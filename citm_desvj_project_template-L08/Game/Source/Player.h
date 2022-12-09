@@ -72,6 +72,7 @@ private:
 	Animation playerdeathleft;
 	Animation bluegem;
 	Animation atacD;
+	Animation atacE;
 
 
 	SDL_Rect rect;
@@ -89,6 +90,7 @@ private:
 	int checkpointsound;
 	int startsound;
 	int chestopen;
+	int espasasoroll;
 	int jumpfx;
 	int winsongfx;
 	iPoint gempos;

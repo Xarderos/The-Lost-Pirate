@@ -87,9 +87,15 @@ Player::Player() : Entity(EntityType::PLAYER)
 	atacD.PushBack({ 64,480,64,40 });
 	atacD.PushBack({ 128,480,64,40 });
 	atacD.PushBack({ 0,480,64,40 });
-
 	atacD.loop = false;
 	atacD.speed = 0.15f;
+
+	atacE.PushBack({ 192,480,64,40 });
+	atacE.PushBack({ 256,480,64,40 });
+	atacE.PushBack({ 320,480,64,40 });
+	atacE.PushBack({ 192,480,64,40 });
+	atacE.loop = false;
+	atacE.speed = 0.15f;
 
 }
 
@@ -142,6 +148,8 @@ bool Player::Start() {
 	chestopen= app->audio->LoadFx("Assets/Audio/Fx/chestopen.ogg");
 	jumpfx= app->audio->LoadFx("Assets/Audio/Fx/JumpFX.ogg");
 	winsongfx=app->audio->LoadFx("Assets/Audio/Fx/winsongfx.ogg");
+	espasasoroll = app->audio->LoadFx("Assets/Audio/Fx/Espasa.ogg");
+
 	bandera = false;
 	deathbool = false;
 	deathtimer = 0;
@@ -374,6 +382,7 @@ bool Player::Update()
 				espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.45f,pbody->body->GetPosition().y + 0.15f }, 0);
 				rect = atacD.GetCurrentFrame();
 				atacD.Update();
+				app->audio->PlayFx(espasasoroll);
 			}
 			else {
 				espasa->body->SetTransform({ 0,0 }, 0);
@@ -382,14 +391,16 @@ bool Player::Update()
 		}
 		if (dreta == false)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacD.currentFrame > 2)
+			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacE.currentFrame > 2)
 			{
-				atacD.Reset();
+				atacE.Reset();
 			}
-			if (atacD.currentFrame < 3) {
+			if (atacE.currentFrame < 3) {
 				espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
-				rect = atacD.GetCurrentFrame();
-				atacD.Update();
+				rect = atacE.GetCurrentFrame();
+				atacE.Update();
+				app->audio->PlayFx(espasasoroll);
+				
 			}
 			else {
 				espasa->body->SetTransform({ 0,0 }, 0);
