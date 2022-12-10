@@ -10,6 +10,8 @@
 #include "Physics.h"
 #include "Animation.h"
 #include "Player.h"
+#include "Pathfinding.h"
+#include "Entity.h"
 
 Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 {
@@ -97,6 +99,9 @@ bool Enemy1::Start() {
 	ebody = app->physics->CreateRectangle(position.x + 15, position.y + 24, 20, 15, bodyType::DYNAMIC);
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
+
+	lastPathEnemy1 = NULL;
+
 	isdead = false;
 	vel = { 0,0 };
 	deathtimer = 0;
@@ -105,6 +110,13 @@ bool Enemy1::Start() {
 
 bool Enemy1::Update()
 {
+	pos.x = ebody->body->GetPosition().x;
+	pos.y = ebody->body->GetPosition().y;
+
+	app->pathfinding->CreatePath(pos, app->scene->player->GetPos());
+
+	lastPathEnemy1 = app->pathfinding->GetLastPath();
+
 	if (isdead == false) {
 		if (deathtimer < 0) {
 			cranc = crabidle.GetCurrentFrame();
@@ -128,6 +140,8 @@ bool Enemy1::Update()
 	if (deathtimer == 0) {
 		isdead = true;
 	}
+
+
 
 	return true;
 }

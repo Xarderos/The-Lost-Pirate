@@ -25,6 +25,8 @@ public:
 
 	bool CleanUp();
 
+	iPoint GetPos();
+
 	// L07 DONE 6: Define OnCollision function for the player. Check the virtual function on Entity class
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 	
@@ -48,6 +50,7 @@ public:
 	b2Vec2 vel = b2Vec2(0, 0);
 	b2Vec2 death = b2Vec2(2, 1);
 	float32 deathangle = 0;
+	iPoint pos;
 private:
 
 	//L02: DONE 1: Declare player parameters

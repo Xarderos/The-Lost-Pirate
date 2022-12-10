@@ -6,6 +6,7 @@
 #include "Point.h"
 
 #include "PugiXml\src\pugixml.hpp"
+#include "Pathfinding.h"
 
 // L04: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
@@ -130,6 +131,10 @@ public:
 
 	// L05: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
+
+	iPoint Map::WorldToMap(int x, int y);
+
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 private:
 

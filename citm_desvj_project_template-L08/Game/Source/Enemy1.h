@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Pathfinding.h"
 
 struct SDL_Texture;
 
@@ -43,10 +44,15 @@ public:
 	bool isdead;
 	int crabdiefx;
 	int deathtimer;
+
+	iPoint pos;
+	const DynArray<iPoint>* lastPathEnemy1;
+
 private:
 	
 	SDL_Texture* texture;
 	const char* texturePath;
+
 
 };
 

@@ -424,6 +424,14 @@ bool Player::Update()
 	return true;
 }
 
+iPoint Player::GetPos()
+{
+	pos.x = pbody->body->GetPosition().x;
+	pos.y = pbody->body->GetPosition().y;
+
+	return pos;
+}
+
 bool Player::CleanUp()
 {
 	return true;
