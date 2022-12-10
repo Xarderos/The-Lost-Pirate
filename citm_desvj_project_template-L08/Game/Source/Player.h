@@ -95,6 +95,7 @@ private:
 	int espasasoroll;
 	int jumpfx;
 	int winsongfx;
+	int hitsfx;
 	iPoint gempos;
 
 };

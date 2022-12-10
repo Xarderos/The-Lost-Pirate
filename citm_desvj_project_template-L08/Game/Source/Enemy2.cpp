@@ -38,7 +38,7 @@ bool Enemy2::Start() {
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Seashell.png");
 
 	ebody = app->physics->CreateRectangleSensor(position.x + 15, position.y + 24, 25, 20, bodyType::STATIC);
-	ebody->ctype = ColliderType::DEATH;
+	ebody->ctype = ColliderType::ENEMY;
 	ebody->listener = this;
 	isdead = false;
 

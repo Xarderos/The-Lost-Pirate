@@ -41,6 +41,8 @@ public:
 	SDL_Rect cranc;
 	b2Vec2 vel;
 	bool isdead;
+	int crabdiefx;
+	int deathtimer;
 private:
 	
 	SDL_Texture* texture;

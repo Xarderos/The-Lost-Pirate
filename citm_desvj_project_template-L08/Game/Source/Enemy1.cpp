@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "Animation.h"
 #include "Player.h"
+
 Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 {
 	name.Create("Enemy1");
@@ -68,8 +69,8 @@ Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 	crabdeadhit.PushBack({ 72,256,72,32 });
 	crabdeadhit.PushBack({ 144,256,72,32 });
 	crabdeadhit.PushBack({ 216,256,72,32 });
-	crabdeadhit.loop = true;
-	crabdeadhit.speed = 0.2f;
+	crabdeadhit.loop = false;
+	crabdeadhit.speed = 0.14f;
 
 	crabdeadground.PushBack({ 0,288,72,32 });
 	crabdeadground.PushBack({ 72,288,72,32 });
@@ -78,6 +79,7 @@ Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 	crabdeadground.loop = true;
 	crabdeadground.speed = 0.2f;
 
+	crabdiefx = app->audio->LoadFx("Assets/Audio/Fx/LegoBreakingSoundEffect.ogg");
 }
 
 Enemy1::~Enemy1() {}
@@ -97,15 +99,23 @@ bool Enemy1::Start() {
 	ebody->ctype = ColliderType::ENEMY;
 	isdead = false;
 	vel = { 0,0 };
+	deathtimer = 0;
 	return true;
 }
 
 bool Enemy1::Update()
 {
 	if (isdead == false) {
-		cranc = crabidle.GetCurrentFrame();
-		crabidle.Update();
-		app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x)-36, METERS_TO_PIXELS(ebody->body->GetPosition().y)-20, &cranc);
+		if (deathtimer < 0) {
+			cranc = crabidle.GetCurrentFrame();
+			crabidle.Update();
+			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 36, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 20, &cranc);
+		}
+		if (deathtimer > 0) {
+			cranc = crabdeadhit.GetCurrentFrame();
+			crabdeadhit.Update();
+			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 36, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 15, &cranc);
+		}
 	}
 	if (isdead == true) {
 		ebody->body->SetTransform({ -100,-100 }, 0);
@@ -114,6 +124,11 @@ bool Enemy1::Update()
 		vel = { -5,-GRAVITY_Y };
 	}
 	ebody->body->SetLinearVelocity(vel);
+	deathtimer--;
+	if (deathtimer == 0) {
+		isdead = true;
+	}
+
 	return true;
 }
 
@@ -128,9 +143,9 @@ void Enemy1::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 
 	case ColliderType::ESPASA:
-
-		isdead = true;
-
+		ebody->body->SetActive(false);
+		deathtimer = 50;
+		app->audio->PlayFx(crabdiefx);
 		break;
 
 	case ColliderType::UNKNOWN:

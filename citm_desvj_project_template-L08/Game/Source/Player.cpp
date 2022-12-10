@@ -149,7 +149,7 @@ bool Player::Start() {
 	jumpfx= app->audio->LoadFx("Assets/Audio/Fx/JumpFX.ogg");
 	winsongfx=app->audio->LoadFx("Assets/Audio/Fx/winsongfx.ogg");
 	espasasoroll = app->audio->LoadFx("Assets/Audio/Fx/Espasa.ogg");
-
+	hitsfx = app->audio->LoadFx("Assets/Audio/Fx/MinecraftHitSoundEffect.ogg");
 	bandera = false;
 	deathbool = false;
 	deathtimer = 0;
@@ -409,8 +409,12 @@ bool Player::Update()
 
 			}
 		}
-
-		app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+		if (hitimer < 0 || deathbool == true) {
+			app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+		}
+		if (hitimer > 0 && hitimer%2!=0 && deathbool == false) {
+			app->render->DrawTexture(texture, position.x - 12, position.y + 0, &rect);
+		}
 		hitimer--;
 	}
 
@@ -457,6 +461,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			LOG("Collision ENEMY");
 			if (app->scene->godmode == false) {
 				if (hitimer < 0) {
+					app->audio->PlayFx(hitsfx);
 					lifes--;
 					hitimer = 60;
 				}
