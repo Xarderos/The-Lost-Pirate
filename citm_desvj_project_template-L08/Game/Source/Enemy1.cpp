@@ -12,6 +12,7 @@
 #include "Player.h"
 #include "Pathfinding.h"
 #include "Entity.h"
+#include "Map.h"
 
 Enemy1::Enemy1() : Entity(EntityType::ENEMY1)
 {
@@ -101,7 +102,7 @@ bool Enemy1::Start() {
 	ebody->ctype = ColliderType::ENEMY;
 
 	lastPathEnemy1 = NULL;
-
+	tilepos.x,tilepos.y = 0, 0;
 	isdead = false;
 	vel = { 0,0 };
 	deathtimer = 0;
@@ -113,9 +114,23 @@ bool Enemy1::Update()
 	pos.x = ebody->body->GetPosition().x;
 	pos.y = ebody->body->GetPosition().y;
 
-	app->pathfinding->CreatePath(pos, app->scene->player->GetPos());
+	lenght=app->pathfinding->CreatePath(pos,app->scene->player->GetPos());
+	if (lenght > -1) {
 
-	lastPathEnemy1 = app->pathfinding->GetLastPath();
+		lastPathEnemy1 = app->pathfinding->GetLastPath();
+		nextpos = lastPathEnemy1->At(lenght-1);
+		tilepos = app->map->MapToWorld(app->map->WorldToMap(pos.x, pos.y).x, app->map->WorldToMap(pos.x, pos.y).y);
+		tilepos.x = tilepos.x - nextpos->x;
+		tilepos.y = tilepos.y - nextpos->y;
+
+	}
+	if (tilepos.x > 0) {
+		vel = { 2,-GRAVITY_Y };
+	}
+	if (tilepos.x < 0) {
+		vel = { -2,-GRAVITY_Y };
+	}
+	
 
 	if (isdead == false) {
 		if (deathtimer < 0) {
@@ -132,9 +147,9 @@ bool Enemy1::Update()
 	if (isdead == true) {
 		ebody->body->SetTransform({ -100,-100 }, 0);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
-		vel = { -5,-GRAVITY_Y };
-	}
+	
+
+	
 	ebody->body->SetLinearVelocity(vel);
 	deathtimer--;
 	if (deathtimer == 0) {

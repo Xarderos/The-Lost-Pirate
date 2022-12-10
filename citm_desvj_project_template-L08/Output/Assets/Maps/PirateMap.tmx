@@ -61,6 +61,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile gid="96"/>
@@ -1221,6 +1222,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -2381,6 +2383,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -3541,6 +3544,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -4701,6 +4705,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -5857,10 +5862,11 @@
    <tile/>
   </data>
  </layer>
- <layer id="11" name="Hitbox" width="72" height="16">
+ <layer id="11" name="Hitbox" width="72" height="16" visible="0">
   <properties>
    <property name="Collision" type="bool" value="true"/>
    <property name="Draw" type="bool" value="false"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -7021,6 +7027,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -8181,6 +8188,7 @@
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="true"/>
+   <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
    <tile/>
@@ -9339,6 +9347,7 @@
  </layer>
  <layer id="21" name="Navigation" width="72" height="16">
   <properties>
+   <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="true"/>
   </properties>

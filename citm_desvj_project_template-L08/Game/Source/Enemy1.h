@@ -44,8 +44,10 @@ public:
 	bool isdead;
 	int crabdiefx;
 	int deathtimer;
-
+	int lenght;
 	iPoint pos;
+	iPoint tilepos;
+	const iPoint* nextpos;
 	const DynArray<iPoint>* lastPathEnemy1;
 
 private:
