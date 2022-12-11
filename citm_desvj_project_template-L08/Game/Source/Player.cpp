@@ -98,6 +98,17 @@ Player::Player() : Entity(EntityType::PLAYER)
 	atacE.loop = false;
 	atacE.speed = 0.15f;
 
+	vides.PushBack({ 0,0,24,28 });
+	vides.PushBack({ 24,0,24,28 });
+	vides.PushBack({ 48,0,24,28 });
+	vides.PushBack({ 72,0,24,28 });
+	vides.PushBack({ 96,0,24,28 });
+	vides.PushBack({ 120,0,24,28 });
+	vides.PushBack({ 144,0,24,28 });
+	vides.PushBack({ 168,0,24,28 });
+	vides.loop = true;
+	vides.speed = 0.1f;
+
 }
 
 Player::~Player() {
@@ -132,7 +143,7 @@ bool Player::Start() {
 	openchest = app->tex->Load("Assets/Textures/chest2.png");
 	doublejumptext = app->tex->Load("Assets/Textures/Screens/doublejumptext.png");
 	bluegemroll = app->tex->Load("Assets/Textures/Spritesheets/bluegemspritesheet.png");
-
+	lifesprite = app->tex->Load("Assets/Textures/Spritesheets/Calavera.png");
 
 	// L07 DONE 5: Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 14, bodyType::DYNAMIC);
@@ -419,7 +430,15 @@ bool Player::Update()
 		hitimer--;
 	}
 
+	if (lifes > 2)
+	{
+		app->render->DrawTexture(lifesprite, pbody->body->GetPosition().x - 0.3f, pbody->body->GetPosition().y, &lifesrect);
+		app->render->DrawTexture(lifesprite, -app->render->camera.x + 30, -app->render->camera.y, &lifesrect);
+		app->render->DrawTexture(lifesprite, -app->render->camera.x + 60, -app->render->camera.y, &lifesrect);
+		lifesrect = vides.GetCurrentFrame();
+		vides.Update();
 
+	}
 
 	
 	return true;

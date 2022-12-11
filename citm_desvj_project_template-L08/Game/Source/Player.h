@@ -65,6 +65,7 @@ private:
 	SDL_Texture* congrats;
 	SDL_Texture* doublejumptext;
 	SDL_Texture* bluegemroll;
+	SDL_Texture* lifesprite;
 
 
 	Animation playeridleright;
@@ -78,10 +79,12 @@ private:
 	Animation bluegem;
 	Animation atacD;
 	Animation atacE;
+	Animation vides;
 
 
 	SDL_Rect rect;
 	SDL_Rect gemrect;
+	SDL_Rect lifesrect;
 	SDL_Rect atacanim;
 
 	const char* texturePath;
