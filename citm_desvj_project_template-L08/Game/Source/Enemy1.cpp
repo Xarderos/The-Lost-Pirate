@@ -144,21 +144,28 @@ bool Enemy1::Update()
 
 		}
 		if (deathtimer < 0) {
-			cranc = crabidle.GetCurrentFrame();
-			crabidle.Update();
-			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+			if (vel.x == 0) {
+				cranc = crabidle.GetCurrentFrame();
+				crabidle.Update();
+			}
+			if (vel.x == -1) {
+				cranc = crabrun.GetCurrentFrame();
+				crabrun.Update();
+			}
 		}
 		if (deathtimer > 0) {
 			cranc = crabdeadhit.GetCurrentFrame();
 			crabdeadhit.Update();
-			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 8, &cranc);
 		}
+		app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+
 	}
 	if (isdead == true) {
 		ebody->body->SetTransform({ -100,-100 }, 0);
 	}
 	if (app->scene->player->deathtimer > 0 && app->scene->player->deathtimer < 90) {
 		isdead = false;
+		ebody->body->SetActive(true);
 		ebody->body->SetTransform(initialpos, 0);
 
 	}
