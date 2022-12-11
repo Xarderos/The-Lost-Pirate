@@ -12,6 +12,7 @@
 #include "Entity.h"
 #include "Item.h"
 #include "Animation.h"
+#include "Map.h"
 Player::Player() : Entity(EntityType::PLAYER)
 {
 
@@ -164,7 +165,7 @@ bool Player::Start() {
 	menutimer = 60;
 	app->LoadGameRequest();
 
-	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, DYNAMIC);
+	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
 	espasa->ctype = ColliderType::ESPASA;
 
 	hitimer = 0;
@@ -382,7 +383,7 @@ bool Player::Update()
 				atacD.Reset();
 			}
 			if (atacD.currentFrame < 3) {
-				espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.45f,pbody->body->GetPosition().y + 0.15f }, 0);
+				espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.51f,pbody->body->GetPosition().y + 0.15f }, 0);
 				rect = atacD.GetCurrentFrame();
 				atacD.Update();
 			}

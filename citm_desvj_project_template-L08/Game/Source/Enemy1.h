@@ -41,14 +41,18 @@ public:
 	Animation crabdeadground;
 	SDL_Rect cranc;
 	b2Vec2 vel;
+	b2Vec2 initialpos;
 	bool isdead;
 	int crabdiefx;
 	int deathtimer;
 	int lenght;
 	iPoint pos;
-	iPoint tilepos;
+	iPoint playerpos;
+	iPoint pixelpos;
+	iPoint postile;
 	const iPoint* nextpos;
 	const DynArray<iPoint>* lastPathEnemy1;
+	bool dreta;
 
 private:
 	

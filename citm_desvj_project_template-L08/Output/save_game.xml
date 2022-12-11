@@ -8,7 +8,8 @@
 	<scene />
 	<entitymanager />
 	<map />
+	<pathfinding />
 	<renderer>
-		<posi x="41" y="7" />
+		<posi x="17" y="8" />
 	</renderer>
 </save_state>

@@ -5862,7 +5862,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="11" name="Hitbox" width="72" height="16" visible="0">
+ <layer id="11" name="Hitbox" width="72" height="16">
   <properties>
    <property name="Collision" type="bool" value="true"/>
    <property name="Draw" type="bool" value="false"/>
@@ -9345,7 +9345,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="21" name="Navigation" width="72" height="16">
+ <layer id="21" name="Navigation" width="72" height="16" visible="0">
   <properties>
    <property name="Collision" type="bool" value="false"/>
    <property name="Draw" type="bool" value="false"/>

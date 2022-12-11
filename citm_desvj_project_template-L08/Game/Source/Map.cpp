@@ -298,7 +298,7 @@ bool Map::Load()
                     //98 == Green Square (die)
                     if (gid == 98)
                     {
-                        PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 16, 32, 32, STATIC);
+                        PhysBody* mapCollider = app->physics->CreateRectangleSensor(pos.x + 16, pos.y + 19, 32, 27, STATIC);
                         mapCollider->ctype = ColliderType::DEATH;
                     }
                     if (gid == 99){

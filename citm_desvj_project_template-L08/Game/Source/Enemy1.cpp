@@ -97,57 +97,71 @@ bool Enemy1::Start() {
 
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Crab.png");
 
-	ebody = app->physics->CreateRectangle(position.x + 15, position.y + 24, 20, 15, bodyType::DYNAMIC);
+	ebody = app->physics->CreateCircle(position.x + 16, position.y + 16, 14, bodyType::DYNAMIC);;
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
-
+	initialpos = {PIXEL_TO_METERS((position.x+10)),PIXEL_TO_METERS((position.y+16))};
 	lastPathEnemy1 = NULL;
-	tilepos.x,tilepos.y = 0, 0;
 	isdead = false;
 	vel = { 0,0 };
 	deathtimer = 0;
+	dreta = false;
 	return true;
 }
 
 bool Enemy1::Update()
 {
-	pos.x = ebody->body->GetPosition().x;
-	pos.y = ebody->body->GetPosition().y;
-
-	lenght=app->pathfinding->CreatePath(pos,app->scene->player->GetPos());
-	if (lenght > -1) {
-
-		lastPathEnemy1 = app->pathfinding->GetLastPath();
-		nextpos = lastPathEnemy1->At(lenght-1);
-		tilepos = app->map->MapToWorld(app->map->WorldToMap(pos.x, pos.y).x, app->map->WorldToMap(pos.x, pos.y).y);
-		tilepos.x = tilepos.x - nextpos->x;
-		tilepos.y = tilepos.y - nextpos->y;
-
-	}
-	if (tilepos.x > 0) {
-		vel = { 2,-GRAVITY_Y };
-	}
-	if (tilepos.x < 0) {
-		vel = { -2,-GRAVITY_Y };
-	}
 	
 
 	if (isdead == false) {
+		pos = app->map->WorldToMap(METERS_TO_PIXELS(ebody->body->GetPosition().x), METERS_TO_PIXELS(ebody->body->GetPosition().y));
+		playerpos = app->map->WorldToMap(METERS_TO_PIXELS(app->scene->player->GetPos().x), METERS_TO_PIXELS(app->scene->player->GetPos().y));
+		if ((playerpos.x - pos.x) > -10 && playerpos.y==pos.y) {
+			lenght = app->pathfinding->CreatePath(playerpos, pos);
+			if (pos.x != playerpos.x && lenght > -1) {
+
+				lastPathEnemy1 = app->pathfinding->GetLastPath();
+				nextpos = lastPathEnemy1->At(lenght - 2);
+				pos.x = nextpos->x - pos.x;
+				if (pos.x > 0) {
+					dreta = true;
+				}
+				if (pos.x < 0) {
+					dreta = false;
+				}
+
+			}
+
+			if (dreta == true) {
+				vel = { 1,-GRAVITY_Y };
+			}
+			if (dreta == false) {
+				vel = { -1,-GRAVITY_Y };
+			}
+		}
+		if (playerpos.y != pos.y) {
+			vel = { 0,-GRAVITY_Y };
+
+		}
 		if (deathtimer < 0) {
 			cranc = crabidle.GetCurrentFrame();
 			crabidle.Update();
-			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 36, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 20, &cranc);
+			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
 		}
 		if (deathtimer > 0) {
 			cranc = crabdeadhit.GetCurrentFrame();
 			crabdeadhit.Update();
-			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 36, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 15, &cranc);
+			app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 8, &cranc);
 		}
 	}
 	if (isdead == true) {
 		ebody->body->SetTransform({ -100,-100 }, 0);
 	}
-	
+	if (app->scene->player->deathtimer > 0 && app->scene->player->deathtimer < 90) {
+		isdead = false;
+		ebody->body->SetTransform(initialpos, 0);
+
+	}
 
 	
 	ebody->body->SetLinearVelocity(vel);
