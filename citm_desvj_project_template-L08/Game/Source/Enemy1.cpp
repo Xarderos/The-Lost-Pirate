@@ -97,7 +97,7 @@ bool Enemy1::Start() {
 
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Crab.png");
 
-	ebody = app->physics->CreateCircle(position.x + 16, position.y + 16, 14, bodyType::DYNAMIC);;
+	ebody = app->physics->CreateCircle(position.x + 16, position.y + 16, 12, bodyType::DYNAMIC);;
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
 	initialpos = {PIXEL_TO_METERS((position.x+10)),PIXEL_TO_METERS((position.y+16))};
@@ -111,7 +111,6 @@ bool Enemy1::Start() {
 
 bool Enemy1::Update()
 {
-	
 
 	if (isdead == false) {
 		pos = app->map->WorldToMap(METERS_TO_PIXELS(ebody->body->GetPosition().x), METERS_TO_PIXELS(ebody->body->GetPosition().y));
@@ -149,24 +148,19 @@ bool Enemy1::Update()
 				crabidle.Update();
 
 			}
-			if (vel.x == -1) {
-				cranc = crabrun.GetCurrentFrame();
-				crabrun.Update();
-
-			}
-			if (vel.x == 1) {
+			if (vel.x == 1 || vel.x == -1) {
 				cranc = crabrun.GetCurrentFrame();
 				crabrun.Update();
 
 			}
 			if (dreta == true) {
 
-				app->render->DrawFlipTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+				app->render->DrawFlipTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 14, &cranc);
 
 			}
 			if (dreta == false) {
 
-				app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+				app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 14, &cranc);
 
 			}
 		}
@@ -175,12 +169,12 @@ bool Enemy1::Update()
 			crabdeadhit.Update();
 			if (dreta == true) {
 
-				app->render->DrawFlipTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+				app->render->DrawFlipTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 10, &cranc);
 
 			}
 			if (dreta == false) {
 
-				app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+				app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 10, &cranc);
 
 			}
 		}

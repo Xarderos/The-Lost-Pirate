@@ -49,6 +49,7 @@ public:
 	float ym;
 	b2Vec2 vel = b2Vec2(0, 0);
 	b2Vec2 death = b2Vec2(2, 1);
+	b2Vec2 xdd;
 	float32 deathangle = 0;
 	iPoint pos;
 private:
@@ -103,6 +104,7 @@ private:
 	int winsongfx;
 	int hitsfx;
 	iPoint gempos;
+	iPoint skullpos;
 
 };
 

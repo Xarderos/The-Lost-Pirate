@@ -6,6 +6,7 @@
 #include "SDL/include/SDL.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Pathfinding.h"
 
 struct SDL_Texture;
 
@@ -31,8 +32,19 @@ public:
 	Animation seashellidle;
 	PhysBody* ebody;
 	SDL_Rect seashell;
+	b2Vec2 vel;
+	b2Vec2 initialpos;
 	bool isdead;
-	
+	int deathtimer;
+	int lenght;
+	iPoint pos;
+	iPoint playerpos;
+	const iPoint* nextpos;
+	const DynArray<iPoint>* lastPathEnemy1;
+	bool dreta;
+	bool up;
+	bool view;
+
 private:
 	
 	SDL_Texture* texture;

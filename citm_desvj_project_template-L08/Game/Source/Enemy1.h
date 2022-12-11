@@ -48,8 +48,6 @@ public:
 	int lenght;
 	iPoint pos;
 	iPoint playerpos;
-	iPoint pixelpos;
-	iPoint postile;
 	const iPoint* nextpos;
 	const DynArray<iPoint>* lastPathEnemy1;
 	bool dreta;

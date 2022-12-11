@@ -182,7 +182,8 @@ bool Player::Start() {
 	hitimer = 0;
 	atacD.currentFrame = 4;
 	atacE.currentFrame = 4;
-
+	skullpos.x = 0;
+	skullpos.y = 0;
 	return true;
 }
 
@@ -321,7 +322,7 @@ bool Player::Update()
 		}
 		
 
-		b2Vec2 xdd = pbody->body->GetPosition();
+		xdd = pbody->body->GetPosition();
 		xdd.x = ((-xdd.x) * 50 * app->win->GetScale()) + 600;
 		if (xdd.x < -96 && xdd.x >-4896) {
 			app->render->camera.x = xdd.x;
@@ -429,12 +430,21 @@ bool Player::Update()
 		}
 		hitimer--;
 	}
-
+	if (xdd.x < -96 && xdd.x >-4896) {
+		skullpos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x)-300;
+	}
+	if (xdd.x > -96) {
+		skullpos.x = -96;
+	}
+	if (xdd.x < -4896) {
+		skullpos.x = -4896;
+	}
 	if (lifes > 2)
 	{
-		app->render->DrawTexture(lifesprite, pbody->body->GetPosition().x - 0.3f, pbody->body->GetPosition().y, &lifesrect);
-		app->render->DrawTexture(lifesprite, -app->render->camera.x + 30, -app->render->camera.y, &lifesrect);
-		app->render->DrawTexture(lifesprite, -app->render->camera.x + 60, -app->render->camera.y, &lifesrect);
+		
+		app->render->DrawTexture(lifesprite, skullpos.x, 10, &lifesrect);
+		app->render->DrawTexture(lifesprite, skullpos.x + 30, 10, &lifesrect);
+		app->render->DrawTexture(lifesprite, skullpos.x + 60, 10, &lifesrect);
 		lifesrect = vides.GetCurrentFrame();
 		vides.Update();
 
