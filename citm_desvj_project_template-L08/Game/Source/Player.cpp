@@ -376,6 +376,8 @@ bool Player::Update()
 			app->render->camera.x = -10000 * 3;
 			app->render->DrawTexture(deathtexture, 10000, 118);
 			dreta = true;
+			lifes = 3;
+
 		}
 		if (bandera == true) {
 
@@ -545,7 +547,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				deathtimer = 120;
 				app->audio->PlayFx(deathsound);
 			}
-			lifes = 3;
 			break;
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
@@ -559,7 +560,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 					deathbool = true;
 					deathtimer = 120;
 					app->audio->PlayFx(deathsound);
-					lifes = 3;
 				}
 
 			}
