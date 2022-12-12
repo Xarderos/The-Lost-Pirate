@@ -431,25 +431,75 @@ bool Player::Update()
 		hitimer--;
 	}
 	if (xdd.x < -96 && xdd.x >-4896) {
-		skullpos.x = METERS_TO_PIXELS(pbody->body->GetPosition().x)-300;
+		if (lifes > 2)
+		{
+			app->render->DrawTexture(lifesprite, position.x - 180, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, position.x - 160, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, position.x - 140, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+		if (lifes > 1)
+		{
+			app->render->DrawTexture(lifesprite, position.x - 180, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, position.x - 160, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+		if (lifes > 0)
+		{
+			app->render->DrawTexture(lifesprite, position.x - 180, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+
 	}
 	if (xdd.x > -96) {
-		skullpos.x = -96;
+		if (lifes > 2)
+		{
+			app->render->DrawTexture(lifesprite, 36, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, 56, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, 76, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+		if (lifes > 1)
+		{
+			app->render->DrawTexture(lifesprite, 36, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, 56, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+		if (lifes > 0)
+		{
+			app->render->DrawTexture(lifesprite, 36, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
 	}
 	if (xdd.x < -4896) {
-		skullpos.x = -4896;
+		if (lifes > 2)
+		{
+			app->render->DrawTexture(lifesprite, 1635, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, 1655, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, 1675, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+		if (lifes > 1)
+		{
+			app->render->DrawTexture(lifesprite, 1635, +120, &lifesrect);
+			app->render->DrawTexture(lifesprite, 1655, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
+		if (lifes > 0)
+		{
+			app->render->DrawTexture(lifesprite, 1635, +120, &lifesrect);
+			lifesrect = vides.GetCurrentFrame();
+			vides.Update();
+		}
 	}
-	if (lifes > 2)
-	{
-		
-		app->render->DrawTexture(lifesprite, skullpos.x, 10, &lifesrect);
-		app->render->DrawTexture(lifesprite, skullpos.x + 30, 10, &lifesrect);
-		app->render->DrawTexture(lifesprite, skullpos.x + 60, 10, &lifesrect);
-		lifesrect = vides.GetCurrentFrame();
-		vides.Update();
-
-	}
-
 	
 	return true;
 }
