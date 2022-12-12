@@ -50,6 +50,8 @@ public:
 private:
 	
 	SDL_Texture* texture;
+	SDL_Texture* mouseTileTex = nullptr;
+
 	const char* texturePath;
 
 };

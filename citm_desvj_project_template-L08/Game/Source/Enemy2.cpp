@@ -46,6 +46,7 @@ bool Enemy2::Awake() {
 bool Enemy2::Start() {
 
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Seashell.png");
+	mouseTileTex = app->tex->Load("Assets/Textures/path_square.png");
 
 	ebody = app->physics->CreateCircle(position.x + 16, position.y + 16, 12, bodyType::DYNAMIC);;
 	initialpos = { PIXEL_TO_METERS((position.x + 10)),PIXEL_TO_METERS((position.y + 16)) };
@@ -81,6 +82,13 @@ bool Enemy2::Update()
 				if (lenght > 1) {
 
 					lastPathEnemy1 = app->pathfinding->GetLastPath();
+					if (app->physics->debug == true) {
+						for (uint i = 0; i < lastPathEnemy1->Count(); ++i)
+						{
+							iPoint pos = app->map->MapToWorld(lastPathEnemy1->At(i)->x, lastPathEnemy1->At(i)->y);
+							app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+						}
+					}
 					nextpos = lastPathEnemy1->At(lenght - 2);
 					pos.x = nextpos->x - pos.x;
 					pos.y = nextpos->y - pos.y;
@@ -153,6 +161,8 @@ bool Enemy2::Update()
 	}
 	if (app->scene->player->deathtimer > 0 && app->scene->player->deathtimer < 90) {
 		isdead = false;
+		seashelldie.Reset();
+		view = false;
 		ebody->body->SetActive(true);
 		ebody->body->SetTransform(initialpos, 0);
 

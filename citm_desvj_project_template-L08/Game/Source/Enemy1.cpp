@@ -96,7 +96,7 @@ bool Enemy1::Awake() {
 bool Enemy1::Start() {
 
 	texture = app->tex->Load("Assets/Textures/Spritesheets/Crab.png");
-
+	mouseTileTex = app->tex->Load("Assets/Textures/path_square.png");
 	ebody = app->physics->CreateCircle(position.x + 16, position.y + 16, 12, bodyType::DYNAMIC);;
 	ebody->listener = this;
 	ebody->ctype = ColliderType::ENEMY;
@@ -117,17 +117,27 @@ bool Enemy1::Update()
 		playerpos = app->map->WorldToMap(METERS_TO_PIXELS(app->scene->player->GetPos().x), METERS_TO_PIXELS(app->scene->player->GetPos().y));
 		if ((playerpos.x - pos.x) > -10 && playerpos.y==pos.y) {
 			lenght = app->pathfinding->CreatePath(playerpos, pos);
+
 			if (pos.x != playerpos.x && lenght > -1) {
 
 				lastPathEnemy1 = app->pathfinding->GetLastPath();
+				if (app->physics->debug==true) {
+					for (uint i = 0; i < lastPathEnemy1->Count(); ++i)
+					{
+						iPoint pos = app->map->MapToWorld(lastPathEnemy1->At(i)->x, lastPathEnemy1->At(i)->y);
+						app->render->DrawTexture(mouseTileTex, pos.x, pos.y);
+					}
+				}
 				nextpos = lastPathEnemy1->At(lenght - 2);
 				pos.x = nextpos->x - pos.x;
+		
 				if (pos.x > 0) {
 					dreta = true;
 				}
 				if (pos.x < 0) {
 					dreta = false;
 				}
+
 
 			}
 
@@ -139,7 +149,7 @@ bool Enemy1::Update()
 			}
 		}
 		if (playerpos.y != pos.y) {
-			vel = { 0,-GRAVITY_Y };
+			vel = { 0,0 };
 
 		}
 		if (deathtimer < 0) {
@@ -187,6 +197,7 @@ bool Enemy1::Update()
 	}
 	if (app->scene->player->deathtimer > 0 && app->scene->player->deathtimer < 90) {
 		isdead = false;
+		crabdeadhit.Reset();
 		ebody->body->SetActive(true);
 		ebody->body->SetTransform(initialpos, 0);
 
