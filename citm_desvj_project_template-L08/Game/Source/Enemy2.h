@@ -30,6 +30,8 @@ public:
 public:
 
 	Animation seashellidle;
+	Animation seashelldie;
+
 	PhysBody* ebody;
 	SDL_Rect seashell;
 	b2Vec2 vel;

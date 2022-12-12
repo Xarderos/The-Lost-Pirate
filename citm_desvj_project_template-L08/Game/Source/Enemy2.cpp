@@ -27,6 +27,12 @@ Enemy2::Enemy2() : Entity(EntityType::ENEMY2)
 	seashellidle.loop = true;
 	seashellidle.speed = 0.15f;
 
+	seashelldie.PushBack({ 0,199,24,36 });
+	seashelldie.PushBack({ 24,199,24,36 });
+	seashelldie.PushBack({ 48,199,24,36 });
+	seashelldie.PushBack({ 72,199,24,36 });
+	seashelldie.loop = false;
+	seashelldie.speed = 0.13f;
 }
 
 Enemy2::~Enemy2() {}
@@ -124,18 +130,19 @@ bool Enemy2::Update()
 			}
 		}
 		if (deathtimer > 0) {
-			/*cranc = crabdeadhit.GetCurrentFrame();
-			crabdeadhit.Update();
+			
+			seashell = seashelldie.GetCurrentFrame();
+			seashelldie.Update();
 			if (dreta == true) {
 
-				app->render->DrawFlipTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+				app->render->DrawFlipTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 15, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 16, &seashell);
 
 			}
 			if (dreta == false) {
 
-				app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 37, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 12, &cranc);
+				app->render->DrawTexture(texture, METERS_TO_PIXELS(ebody->body->GetPosition().x) - 15, METERS_TO_PIXELS(ebody->body->GetPosition().y) - 16, &seashell);
 
-			}*/
+			}
 		}
 
 
@@ -174,7 +181,6 @@ void Enemy2::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		ebody->body->SetActive(false);
 		deathtimer = 50;
-		isdead = true;
 
 		break;
 

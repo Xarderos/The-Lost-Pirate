@@ -107,7 +107,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	vides.PushBack({ 144,0,24,28 });
 	vides.PushBack({ 168,0,24,28 });
 	vides.loop = true;
-	vides.speed = 0.1f;
+	vides.speed = 0.06f;
 
 }
 
@@ -176,7 +176,7 @@ bool Player::Start() {
 	menutimer = 60;
 	app->LoadGameRequest();
 
-	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, STATIC);
+	espasa = app->physics->CreateRectangleSensor(0, 0, 21, 8, DYNAMIC);
 	espasa->ctype = ColliderType::ESPASA;
 
 	hitimer = 0;
@@ -388,37 +388,39 @@ bool Player::Update()
 		}
 		if (dreta == true && deathbool==false)
 		{
-
+			espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.51f,pbody->body->GetPosition().y + 0.15f }, 0);
 			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacD.currentFrame > 2)
 			{
 				app->audio->PlayFx(espasasoroll);
 				atacD.Reset();
 			}
 			if (atacD.currentFrame < 3) {
-				espasa->body->SetTransform({ pbody->body->GetPosition().x + 0.51f,pbody->body->GetPosition().y + 0.15f }, 0);
+				espasa->body->SetActive(true);
+
 				rect = atacD.GetCurrentFrame();
 				atacD.Update();
 			}
 			else {
-				espasa->body->SetTransform({ 0,0 }, 0);
+				espasa->body->SetActive(false);
 
 			}
 		}
 		if (dreta == false && deathbool == false)
 		{
+			espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
 			if (app->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN && atacE.currentFrame > 2)
 			{
 				app->audio->PlayFx(espasasoroll);
 				atacE.Reset();
 			}
 			if (atacE.currentFrame < 3) {
-				espasa->body->SetTransform({ pbody->body->GetPosition().x - 0.3f,pbody->body->GetPosition().y + 0.15f }, 0);
+				espasa->body->SetActive(true);
 				rect = atacE.GetCurrentFrame();
 				atacE.Update();
 				
 			}
 			else {
-				espasa->body->SetTransform({ 0,0 }, 0);
+				espasa->body->SetActive(false);
 
 			}
 		}
