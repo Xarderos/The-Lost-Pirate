@@ -12,11 +12,10 @@ A platform game made by two CITM students.
  - Player and items animations
  - Doublejump
  - Amazing fx
- New!:
- - 2 walking enemies
- - 2 flying enemies
- - Sword attack
- - The player has 3 lifes
+ - New!: 2 walking enemies
+ - New!: 2 flying enemies
+ - New!: Sword attack
+ - New!: The player has 3 lifes
  
 ## Controls
 
