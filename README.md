@@ -12,6 +12,7 @@ A platform game made by two CITM students.
  - Player and items animations
  - Doublejump
  - Amazing fx
+ New!:
  - 2 walking enemies
  - 2 flying enemies
  - Sword attack
@@ -22,12 +23,12 @@ A platform game made by two CITM students.
  - A->Move left
  - D->Move right
  - Space->Jump/Doublejump
- - K-> Atack
+ - New!: K-> Atack
  - F1 Start from the first level
  - F3 Start from the beginning of the current level
  - F5 Save the current player position
  - F6 Load the saved player position
- - F9 View colliders / logic / enemies pathfinding
+ - F9 View colliders / logic /New!: enemies pathfinding
  - F10 God Mode(death disabled, no cooldown doublejump(similar to flying))
 
 ## Developers
